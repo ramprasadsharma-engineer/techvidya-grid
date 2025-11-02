@@ -1,0 +1,60 @@
+.magnetic-cursor {
+  position: fixed;
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+  transition: all 0.1s ease;
+}
+
+.cursor-dot {
+  width: 6px;
+  height: 6px;
+  background: rgba(180, 220, 255, 0.8);
+  border-radius: 50%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  transition: all 0.15s ease;
+}
+
+.cursor-ring {
+  width: 24px;
+  height: 24px;
+  border: 2px solid rgba(180, 220, 255, 0.4);
+  border-radius: 50%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  transition: all 0.2s ease;
+}
+
+/* Hover state */
+.magnetic-cursor.hovering .cursor-dot {
+  width: 8px;
+  height: 8px;
+  background: rgba(232, 232, 232, 1);
+}
+
+.magnetic-cursor.hovering .cursor-ring {
+  width: 40px;
+  height: 40px;
+  border-color: rgba(232, 232, 232, 0.6);
+}
+
+/* Hide default cursor */
+* {
+  cursor: none !important;
+}
+
+/* Mobile - show default cursor */
+@media (max-width: 768px) {
+  .magnetic-cursor {
+    display: none;
+  }
+  
+  * {
+    cursor: auto !important;
+  }
+}

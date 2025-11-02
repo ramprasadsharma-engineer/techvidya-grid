@@ -1,0 +1,123 @@
+.sponsors-section {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sponsor-tiers {
+  margin: 3rem 0;
+}
+
+.sponsor-tier {
+  margin-bottom: 3rem;
+}
+
+.tier-title {
+  font-size: 1.8rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.tier-title.platinum {
+  background: linear-gradient(135deg, #E5E4E2 0%, #BCC6CC 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.tier-title.gold {
+  background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.tier-title.silver {
+  background: linear-gradient(135deg, #C0C0C0 0%, #A8A9AD 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.sponsor-logos {
+  display: flex;
+  gap: 2rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.sponsor-placeholder {
+  width: 180px;
+  height: 120px;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--gray-mid);
+  font-size: 0.9rem;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.sponsor-placeholder:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 40px rgba(232, 232, 232, 0.2);
+}
+
+.become-sponsor {
+  margin-top: 4rem;
+  padding: 3rem;
+  border-radius: 20px;
+  background: rgba(232, 232, 232, 0.05);
+  border: 2px solid rgba(232, 232, 232, 0.2);
+  text-align: center;
+}
+
+.become-sponsor h3 {
+  font-size: 2rem;
+  font-weight: 600;
+  color: var(--white);
+  margin-bottom: 1rem;
+  background: linear-gradient(135deg, #E8E8E8 0%, #B8B8B8 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.become-sponsor p {
+  color: var(--gray-light);
+  font-size: 1.1rem;
+  margin-bottom: 2rem;
+  opacity: 0.8;
+}
+
+.sponsor-button {
+  background: linear-gradient(135deg, #E8E8E8 0%, #B8B8B8 100%);
+  color: #0a0a0a;
+  border: none;
+  padding: 1rem 2.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  cursor: pointer;
+  border-radius: 50px;
+  box-shadow: 0 8px 32px rgba(232, 232, 232, 0.3);
+}
+
+@media (max-width: 768px) {
+  .sponsor-logos {
+    gap: 1rem;
+  }
+
+  .sponsor-placeholder {
+    width: 140px;
+    height: 100px;
+  }
+
+  .become-sponsor {
+    padding: 2rem;
+  }
+}
+

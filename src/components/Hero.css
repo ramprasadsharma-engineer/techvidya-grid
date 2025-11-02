@@ -1,0 +1,141 @@
+.hero {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  overflow: visible;
+  padding: 1rem;
+}
+
+.presenter-title {
+  margin: 0 auto;
+  padding: 0 1rem;
+  font-family: "Orbitron", sans-serif;
+  font-size: clamp(1.5rem, 3.5vw, 2.2rem);
+  font-weight: 500;
+  color: var(--white);
+  text-align: center;
+  text-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+  line-height: 1.15;
+  margin-bottom: clamp(1rem, 2.2vh, 1.6rem);
+}
+
+.presenter-title.presents {
+  font-family: "Orbitron", sans-serif;
+  font-size: clamp(1.2rem, 2.5vw, 1.6rem);
+  font-weight: 400;
+  font-style: italic;
+  background: linear-gradient(135deg, #E8E8E8 0%, #B8B8B8 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  line-height: 1;
+  margin-top: 0;
+  margin-bottom: clamp(0.1rem, 0.6vh, 0.35rem);
+}
+
+.hero-content {
+  text-align: center;
+  z-index: 2;
+  position: relative;
+}
+
+.event-title {
+  font-family: "Orbitron", sans-serif;
+  font-size: clamp(3rem, 10vw, 6rem);
+  font-weight: 700;
+  letter-spacing: -2px;
+  margin: 0;
+  padding: 0 1rem;
+}
+
+.liquid-mirror {
+  background: linear-gradient(135deg, var(--text-primary) 0%, var(--accent) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.event-subtitle {
+  font-family: "Orbitron", sans-serif;
+  font-size: clamp(1.5rem, 5vw, 2.5rem);
+  font-weight: 500;
+  color: var(--text-muted);
+  margin: 0.25rem 0 0.5rem 0;
+  letter-spacing: 1px;
+  text-align: center;
+}
+
+.event-dates {
+  font-family: "Orbitron", sans-serif;
+  font-size: clamp(1rem, 3vw, 1.5rem);
+  font-weight: 500;
+  color: var(--accent);
+  margin: 0 0 2rem 0;
+  letter-spacing: 0.5px;
+  text-align: center;
+}
+
+.hero-cta {
+  display: flex;
+  gap: 1.5rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 2rem;
+}
+
+.cta-button {
+  font-family: "Orbitron", sans-serif;
+  background: linear-gradient(135deg, #E8E8E8 0%, #B8B8B8 100%);
+  color: #0a0a0a;
+  border: none;
+  padding: 1rem 2rem;
+  font-size: 1rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+  box-shadow: 0 4px 20px rgba(232, 232, 232, 0.3);
+  position: relative;
+  overflow: hidden;
+}
+
+.cta-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(232, 232, 232, 0.5);
+}
+
+.cta-button:active {
+  transform: translateY(0);
+}
+
+
+
+@media (max-width: 768px) {
+  .presenter-title {
+    font-size: 1.35rem;
+    margin-bottom: clamp(0.8rem, 1.8vh, 1.2rem);
+  }
+  
+  .presenter-title.presents {
+    font-size: 1.1rem;
+    margin-bottom: clamp(0.08rem, 0.6vh, 0.3rem);
+  }
+
+  .hero-cta {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .cta-button {
+    width: 100%;
+    max-width: 280px;
+    padding: 1rem 1.5rem;
+    font-size: 0.95rem;
+  }
+}
+
