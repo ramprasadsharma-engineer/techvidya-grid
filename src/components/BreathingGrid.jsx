@@ -320,7 +320,7 @@ export default function BreathingGrid() {
       window.removeEventListener('resize', resizeCanvas)
       cancelAnimationFrame(animationFrameId)
     }
-  }, [scrollY, activeSection, mousePos, ripples])
+  }, [scrollY, activeSection, mousePos])
 
   return <canvas ref={canvasRef} className="breathing-grid-canvas" />
 }

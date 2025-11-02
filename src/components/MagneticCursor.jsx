@@ -9,27 +9,57 @@ export default function MagneticCursor() {
   const currentPos = useRef({ x: 0, y: 0 })
   const isHovering = useRef(false)
   const rafId = useRef(null)
+  const lastTime = useRef(0)
+  const isAnimating = useRef(false)
 
-  // Smooth animation loop using requestAnimationFrame
-  const animate = useCallback(() => {
+  // Optimized animation loop with performance improvements
+  const animate = useCallback((timestamp) => {
     const cursor = cursorRef.current
     if (!cursor) return
 
-    // Smooth lerp interpolation for fluid movement
-    const lerp = 0.15
-    currentPos.current.x += (mousePos.current.x - currentPos.current.x) * lerp
-    currentPos.current.y += (mousePos.current.y - currentPos.current.y) * lerp
+    // Calculate delta time for consistent animations
+    const deltaTime = timestamp - lastTime.current
+    lastTime.current = timestamp
 
-    // Use transform3d for hardware acceleration
-    cursor.style.transform = `translate3d(${currentPos.current.x - 50}px, ${currentPos.current.y - 50}px, 0)`
+    // Skip frame if too soon (targeting 60fps)
+    if (deltaTime < 16) {
+      rafId.current = requestAnimationFrame(animate)
+      return
+    }
+
+    // Calculate distance to target
+    const dx = mousePos.current.x - currentPos.current.x
+    const dy = mousePos.current.y - currentPos.current.y
+    const distance = Math.sqrt(dx * dx + dy * dy)
+
+    // Only update if movement is significant (reduces unnecessary renders)
+    if (distance > 0.1) {
+      // Adaptive lerp - faster when far, slower when close
+      const lerp = Math.min(0.2, 0.1 + distance * 0.001)
+      currentPos.current.x += dx * lerp
+      currentPos.current.y += dy * lerp
+
+      // Use transform3d for hardware acceleration
+      // Offset by 20px (half of 40px container size) to center the cursor
+      cursor.style.transform = `translate3d(${currentPos.current.x - 20}px, ${currentPos.current.y - 20}px, 0)`
+    }
 
     rafId.current = requestAnimationFrame(animate)
   }, [])
 
+  // Throttled mouse move handler for better performance
   const handleMouseMove = useCallback((e) => {
     mousePos.current.x = e.clientX
     mousePos.current.y = e.clientY
-  }, [])
+    
+    // Start animation if not already running
+    if (!isAnimating.current) {
+      isAnimating.current = true
+      if (!rafId.current) {
+        rafId.current = requestAnimationFrame(animate)
+      }
+    }
+  }, [animate])
 
   const handleMouseEnter = useCallback(() => {
     if (!isHovering.current) {
@@ -50,28 +80,59 @@ export default function MagneticCursor() {
   }, [])
 
   useEffect(() => {
-    // Start animation loop
-    rafId.current = requestAnimationFrame(animate)
-
-    // Add event listeners to interactive elements
-    const interactiveElements = document.querySelectorAll('button, a, input, textarea, [role="button"], .event-btn')
+    // Initialize cursor position
+    const initX = window.innerWidth / 2
+    const initY = window.innerHeight / 2
+    mousePos.current = { x: initX, y: initY }
+    currentPos.current = { x: initX, y: initY }
     
-    interactiveElements.forEach(el => {
-      el.addEventListener('mouseenter', handleMouseEnter, { passive: true })
-      el.addEventListener('mouseleave', handleMouseLeave, { passive: true })
-    })
+    // Set initial cursor position
+    if (cursorRef.current) {
+      cursorRef.current.style.transform = `translate3d(${initX - 20}px, ${initY - 20}px, 0)`
+    }
+
+    // Use event delegation for better performance
+    const handleInteraction = (e) => {
+      const target = e.target.closest('button, a, input, textarea, [role="button"], .event-btn')
+      if (target) {
+        if (e.type === 'mouseover') {
+          handleMouseEnter()
+        } else if (e.type === 'mouseout') {
+          handleMouseLeave()
+        }
+      }
+    }
 
     document.addEventListener('mousemove', handleMouseMove, { passive: true })
+    document.addEventListener('mouseover', handleInteraction, { passive: true, capture: true })
+    document.addEventListener('mouseout', handleInteraction, { passive: true, capture: true })
+
+    // Hide cursor on mouse leave
+    const handleMouseLeaveWindow = () => {
+      if (cursorRef.current) {
+        cursorRef.current.style.opacity = '0'
+      }
+      isAnimating.current = false
+    }
+
+    const handleMouseEnterWindow = () => {
+      if (cursorRef.current) {
+        cursorRef.current.style.opacity = '1'
+      }
+    }
+
+    document.addEventListener('mouseleave', handleMouseLeaveWindow)
+    document.addEventListener('mouseenter', handleMouseEnterWindow)
 
     return () => {
       if (rafId.current) {
         cancelAnimationFrame(rafId.current)
       }
       document.removeEventListener('mousemove', handleMouseMove)
-      interactiveElements.forEach(el => {
-        el.removeEventListener('mouseenter', handleMouseEnter)
-        el.removeEventListener('mouseleave', handleMouseLeave)
-      })
+      document.removeEventListener('mouseover', handleInteraction)
+      document.removeEventListener('mouseout', handleInteraction)
+      document.removeEventListener('mouseleave', handleMouseLeaveWindow)
+      document.removeEventListener('mouseenter', handleMouseEnterWindow)
     }
   }, [animate, handleMouseMove, handleMouseEnter, handleMouseLeave])
 

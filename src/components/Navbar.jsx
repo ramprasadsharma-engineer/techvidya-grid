@@ -27,14 +27,25 @@ export default function Navbar({ scrollY }) {
   }, [scrollY])
 
   const scrollToSection = (sectionId) => {
+    // If clicking the logo, scroll to top
+    if (sectionId === 'hero' || sectionId === 'top') {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      })
+      return
+    }
+    
     const element = document.getElementById(sectionId)
-    const navHeight = 80
-    const targetPosition = element.offsetTop - navHeight
+    if (element) {
+      const navHeight = 80
+      const targetPosition = element.offsetTop - navHeight
 
-    window.scrollTo({
-      top: targetPosition,
-      behavior: 'smooth'
-    })
+      window.scrollTo({
+        top: targetPosition,
+        behavior: 'smooth'
+      })
+    }
   }
 
   return (

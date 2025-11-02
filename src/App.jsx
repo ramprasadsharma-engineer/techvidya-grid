@@ -1,39 +1,82 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback, lazy, Suspense } from 'react'
 import Navbar from './components/Navbar'
 import Hero from './components/Hero'
-import About from './components/About'
-import Events from './components/Events'
-import Contact from './components/Contact'
-import Footer from './components/Footer'
-import ParticleBackground from './components/ParticleBackground'
 import BreathingGrid from './components/BreathingGrid'
 import MagneticCursor from './components/MagneticCursor'
 import SocialSidebar from './components/SocialSidebar'
 import './App.css'
 
+// Lazy load heavy components for better initial load performance
+const About = lazy(() => import('./components/About'))
+const Events = lazy(() => import('./components/Events'))
+const Contact = lazy(() => import('./components/Contact'))
+const Footer = lazy(() => import('./components/Footer'))
+const ParticleBackground = lazy(() => import('./components/ParticleBackground'))
+
 function App() {
   const [scrollY, setScrollY] = useState(0)
+  const [isLoading, setIsLoading] = useState(true)
 
+  // Throttled scroll handler for better performance
   useEffect(() => {
-    const handleScroll = () => {
-      setScrollY(window.scrollY)
+    let ticking = false
+    let lastScrollY = 0
+
+    const updateScroll = () => {
+      lastScrollY = window.scrollY
+      setScrollY(lastScrollY)
+      ticking = false
     }
-    window.addEventListener('scroll', handleScroll)
-    return () => window.removeEventListener('scroll', handleScroll)
+
+    const handleScroll = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(updateScroll)
+        ticking = true
+      }
+    }
+
+    // Optimize initial load
+    const handleLoad = () => {
+      setIsLoading(false)
+    }
+
+    window.addEventListener('scroll', handleScroll, { passive: true })
+    window.addEventListener('load', handleLoad)
+    
+    // Set initial loading state
+    if (document.readyState === 'complete') {
+      setIsLoading(false)
+    }
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll)
+      window.removeEventListener('load', handleLoad)
+    }
   }, [])
 
+  // Loading component
+  const LoadingFallback = () => (
+    <div className="loading-fallback">
+      <div className="loading-spinner"></div>
+    </div>
+  )
+
   return (
-    <div className="App">
+    <div className={`App ${isLoading ? 'is-loading' : ''}`}>
       <BreathingGrid />
-      <ParticleBackground />
+      <Suspense fallback={<LoadingFallback />}>
+        <ParticleBackground />
+      </Suspense>
       <MagneticCursor />
       <SocialSidebar />
       <Navbar scrollY={scrollY} />
       <Hero />
-      <About />
-      <Events />
-      <Contact />
-      <Footer />
+      <Suspense fallback={<LoadingFallback />}>
+        <About />
+        <Events />
+        <Contact />
+        <Footer />
+      </Suspense>
     </div>
   )
 }

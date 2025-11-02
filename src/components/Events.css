@@ -85,19 +85,12 @@
   text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
 }
 
-/* Event Description (2 lines) */
+/* Event Description (full text) */
 .event-description {
   font-size: 0.9rem;
   line-height: 1.5;
   color: rgba(255, 255, 255, 0.88);
   margin: 0;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  min-height: 2.7rem;
   text-shadow: 0 1px 4px rgba(0, 0, 0, 0.8);
 }
 
