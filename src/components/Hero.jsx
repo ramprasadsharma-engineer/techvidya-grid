@@ -23,6 +23,16 @@ export default function Hero() {
         >
           Presents
         </motion.h3>
+        
+        <motion.h3
+          className="state-level-title enhanced-glow"
+          initial={{ opacity: 0, y: -30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.45 }}
+        >
+          State-Level Technical Fest
+        </motion.h3>
+        
         <motion.h1
           className="event-title liquid-mirror enhanced-glow"
           data-text="TECHVIDYA 2K25"
@@ -30,7 +40,7 @@ export default function Hero() {
           animate={{ opacity: 1, scale: 1 }}
           transition={{
             duration: 1,
-            delay: 0.55,
+            delay: 0.65,
             type: "spring",
             stiffness: 100
           }}
@@ -42,7 +52,7 @@ export default function Hero() {
           className="event-subtitle floating"
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 1 }}
+          transition={{ duration: 0.8, delay: 1.1 }}
         >
           CHANAKYOTSAV
         </motion.h2>
@@ -51,7 +61,7 @@ export default function Hero() {
           className="event-dates enhanced-glow"
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 1.1 }}
+          transition={{ duration: 0.8, delay: 1.2 }}
         >
           14TH & 15TH NOVEMBER
         </motion.p>
@@ -60,7 +70,7 @@ export default function Hero() {
           className="hero-cta"
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 1.2 }}
+          transition={{ duration: 0.8, delay: 1.4 }}
         >
           <motion.button
             className="cta-button pulse-glow"

@@ -14,7 +14,7 @@ const eventData = [
   {
     id: 1,
     title: "Hackathon",
-    description: "A 24-hour hackathon to build innovative solutions for real-world problems.",
+    description: "A hackathon to build innovative solutions for real-world problems.",
     date: "November 14, 2025",
     time: "10:30 AM",
     registrationFee: "₹500",
@@ -480,16 +480,27 @@ export default function Events() {
               </div>
               
               <div className="event-buttons">
-                <motion.a
-                  href={event.knowMoreLink}
-                  className="event-btn know-more-btn"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                >
-                  Know More
-                </motion.a>
+                {event.title === "Hackathon" ? (
+                  <motion.div
+                    className="event-btn know-more-btn"
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    style={{ cursor: 'not-allowed', opacity: 0.7 }}
+                  >
+                    Website
+                  </motion.div>
+                ) : (
+                  <motion.a
+                    href={event.knowMoreLink}
+                    className="event-btn know-more-btn"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                  >
+                    Know More
+                  </motion.a>
+                )}
                 {event.title === "Hackathon" ? (
                   <motion.div
                     className="event-btn register-btn coming-soon-btn"
