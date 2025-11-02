@@ -17,9 +17,12 @@
   font-weight: 500;
   color: var(--white);
   text-align: center;
-  text-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+  text-shadow: 0 0 20px rgba(255, 255, 255, 0.4), 
+               0 0 40px rgba(180, 220, 255, 0.3),
+               0 0 60px rgba(180, 220, 255, 0.2);
   line-height: 1.15;
   margin-bottom: clamp(1rem, 2.2vh, 1.6rem);
+  animation: subtleGlow 3s ease-in-out infinite alternate;
 }
 
 .presenter-title.presents {
@@ -67,10 +70,21 @@
 }
 
 .liquid-mirror {
-  background: linear-gradient(135deg, var(--text-primary) 0%, var(--accent) 100%);
+  background: linear-gradient(135deg, 
+    var(--text-primary) 0%, 
+    rgba(180, 220, 255, 1) 25%,
+    var(--accent) 50%,
+    rgba(255, 255, 255, 0.9) 75%,
+    var(--text-primary) 100%);
+  background-size: 200% 200%;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+  animation: liquidFlow 4s ease-in-out infinite;
+  text-shadow: 0 0 30px rgba(180, 220, 255, 0.5),
+               0 0 60px rgba(180, 220, 255, 0.3),
+               0 0 90px rgba(180, 220, 255, 0.2);
+  position: relative;
 }
 
 .event-subtitle {
@@ -114,9 +128,29 @@
   cursor: pointer;
   border-radius: 8px;
   transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
-  box-shadow: 0 4px 20px rgba(232, 232, 232, 0.3);
+  box-shadow: 0 4px 20px rgba(232, 232, 232, 0.4),
+              0 8px 40px rgba(180, 220, 255, 0.2);
   position: relative;
   overflow: hidden;
+  animation: pulseGlow 2s ease-in-out infinite alternate;
+}
+
+.cta-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, 
+    transparent 0%, 
+    rgba(255, 255, 255, 0.2) 50%, 
+    transparent 100%);
+  transition: left 0.5s ease;
+}
+
+.cta-button:hover::before {
+  left: 100%;
 }
 
 .cta-button:hover {
@@ -161,6 +195,89 @@
     max-width: 280px;
     padding: 1rem 1.5rem;
     font-size: 0.95rem;
+  }
+}
+
+/* Beautiful Animation Keyframes */
+@keyframes subtleGlow {
+  0% {
+    text-shadow: 0 0 20px rgba(255, 255, 255, 0.4), 
+                 0 0 40px rgba(180, 220, 255, 0.3),
+                 0 0 60px rgba(180, 220, 255, 0.2);
+  }
+  100% {
+    text-shadow: 0 0 25px rgba(255, 255, 255, 0.6), 
+                 0 0 50px rgba(180, 220, 255, 0.4),
+                 0 0 80px rgba(180, 220, 255, 0.3);
+  }
+}
+
+@keyframes liquidFlow {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@keyframes pulseGlow {
+  0% {
+    box-shadow: 0 4px 20px rgba(232, 232, 232, 0.4),
+                0 8px 40px rgba(180, 220, 255, 0.2);
+  }
+  100% {
+    box-shadow: 0 6px 25px rgba(232, 232, 232, 0.6),
+                0 12px 50px rgba(180, 220, 255, 0.4);
+  }
+}
+
+/* Enhanced Glowing Classes */
+.enhanced-glow {
+  text-shadow: 0 0 20px rgba(180, 220, 255, 0.5),
+               0 0 40px rgba(180, 220, 255, 0.3),
+               0 0 60px rgba(180, 220, 255, 0.2) !important;
+}
+
+.floating {
+  animation: floating 3s ease-in-out infinite;
+}
+
+@keyframes floating {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.pulse-glow {
+  animation: pulseGlow 2s ease-in-out infinite alternate;
+}
+
+/* Add some sparkle effects */
+.event-title::after {
+  content: '✨';
+  position: absolute;
+  top: -20px;
+  right: -20px;
+  font-size: 1.5rem;
+  animation: sparkle 2s ease-in-out infinite;
+  opacity: 0.7;
+}
+
+@keyframes sparkle {
+  0%, 100% {
+    opacity: 0.7;
+    transform: scale(1) rotate(0deg);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.2) rotate(180deg);
   }
 }
 

@@ -1,0 +1,42 @@
+.floating-elements {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 1;
+  overflow: hidden;
+}
+
+.floating-particle {
+  position: absolute;
+  color: rgba(180, 220, 255, 0.6);
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 500;
+  text-shadow: 0 0 10px rgba(180, 220, 255, 0.3),
+               0 0 20px rgba(180, 220, 255, 0.2);
+  animation: particleGlow 3s ease-in-out infinite alternate;
+  white-space: nowrap;
+  user-select: none;
+  will-change: transform, opacity;
+}
+
+@keyframes particleGlow {
+  0% {
+    text-shadow: 0 0 10px rgba(180, 220, 255, 0.3),
+                 0 0 20px rgba(180, 220, 255, 0.2);
+  }
+  100% {
+    text-shadow: 0 0 15px rgba(180, 220, 255, 0.5),
+                 0 0 30px rgba(180, 220, 255, 0.3),
+                 0 0 45px rgba(180, 220, 255, 0.1);
+  }
+}
+
+/* Reduce on mobile for performance */
+@media (max-width: 768px) {
+  .floating-particle {
+    display: none;
+  }
+}
