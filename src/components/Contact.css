@@ -78,8 +78,10 @@
 
 .dept-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  grid-template-columns: repeat(4, 1fr);
   gap: 2.5rem;
+  max-width: 1400px;
+  margin: 0 auto;
 }
 
 .dept-member {
@@ -88,9 +90,32 @@
   gap: 0.4rem;
 }
 
+@media (min-width: 969px) {
+  .dept-grid .dept-member:nth-child(4n+1) {
+    padding-left: 3rem;
+  }
+}
+
+.convenors-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2.5rem;
+}
+
+.chief-coordinators-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2.5rem;
+}
+
 @media (max-width: 968px) {
   .dept-grid {
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+  }
+  
+  .convenors-grid,
+  .chief-coordinators-grid {
     gap: 2rem;
   }
 }
@@ -109,7 +134,9 @@
     padding: 0 1rem;
   }
   
-  .dept-grid {
+  .dept-grid,
+  .convenors-grid,
+  .chief-coordinators-grid {
     grid-template-columns: 1fr;
   }
   

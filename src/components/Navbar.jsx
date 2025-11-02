@@ -70,7 +70,7 @@ export default function Navbar({ scrollY }) {
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.95 }}
               >
-                {item === 'contact' ? 'SUPPORT' : item.toUpperCase()}
+                {item === 'contact' ? 'TEAM' : item.toUpperCase()}
               </motion.a>
             </li>
           ))}
