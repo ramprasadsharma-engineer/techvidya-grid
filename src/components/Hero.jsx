@@ -1,6 +1,5 @@
 import { motion } from 'framer-motion'
 import './Hero.css'
-import './StarField.css'
 
 export default function Hero() {
   return (
