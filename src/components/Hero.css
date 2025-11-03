@@ -70,20 +70,10 @@
 }
 
 .liquid-mirror {
-  background: linear-gradient(135deg, 
-    var(--text-primary) 0%, 
-    rgba(180, 220, 255, 1) 25%,
-    var(--accent) 50%,
-    rgba(255, 255, 255, 0.9) 75%,
-    var(--text-primary) 100%);
-  background-size: 200% 200%;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  animation: liquidFlow 4s ease-in-out infinite;
-  text-shadow: 0 0 30px rgba(180, 220, 255, 0.5),
-               0 0 60px rgba(180, 220, 255, 0.3),
-               0 0 90px rgba(180, 220, 255, 0.2);
+  color: #FFFFFF;
+  text-shadow: 0 0 30px rgba(255, 255, 255, 0.3),
+               0 0 60px rgba(255, 255, 255, 0.2),
+               0 0 90px rgba(255, 255, 255, 0.1);
   position: relative;
 }
 
@@ -259,25 +249,4 @@
   animation: pulseGlow 2s ease-in-out infinite alternate;
 }
 
-/* Add some sparkle effects */
-.event-title::after {
-  content: '✨';
-  position: absolute;
-  top: -20px;
-  right: -20px;
-  font-size: 1.5rem;
-  animation: sparkle 2s ease-in-out infinite;
-  opacity: 0.7;
-}
-
-@keyframes sparkle {
-  0%, 100% {
-    opacity: 0.7;
-    transform: scale(1) rotate(0deg);
-  }
-  50% {
-    opacity: 1;
-    transform: scale(1.2) rotate(180deg);
-  }
-}
 

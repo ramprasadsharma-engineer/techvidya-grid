@@ -420,7 +420,8 @@ export default function Events() {
       const eventsSection = document.getElementById('events')
       if (eventsSection) {
         const rect = eventsSection.getBoundingClientRect()
-        const isVisible = rect.top < window.innerHeight && rect.bottom > 0
+        // Show sidebar when events section is visible (with more generous margin)
+        const isVisible = rect.top < window.innerHeight + 200 && rect.bottom > -200
         setSidebarVisible(isVisible)
       }
     }
@@ -430,6 +431,13 @@ export default function Events() {
     
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
+
+  // Also show the sidebar toggle as soon as the section is observed in view
+  useEffect(() => {
+    if (isInView) {
+      setSidebarVisible(true)
+    }
+  }, [isInView])
 
   return (
     <section className="section events-section" id="events" ref={ref}>

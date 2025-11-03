@@ -2,7 +2,6 @@ import { useState, useEffect, useCallback, lazy, Suspense } from 'react'
 import Navbar from './components/Navbar'
 import Hero from './components/Hero'
 import BreathingGrid from './components/BreathingGrid'
-import MagneticCursor from './components/MagneticCursor'
 import SocialSidebar from './components/SocialSidebar'
 import './App.css'
 
@@ -67,7 +66,6 @@ function App() {
       <Suspense fallback={<LoadingFallback />}>
         <ParticleBackground />
       </Suspense>
-      <MagneticCursor />
       <SocialSidebar />
       <Navbar scrollY={scrollY} />
       <Hero />

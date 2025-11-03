@@ -4,11 +4,11 @@
   top: 50%;
   right: 30px;
   transform: translateY(-50%);
-  z-index: 999;
-  background: rgba(232, 232, 232, 0.1);
+  z-index: 3001;
+  background: rgba(232, 232, 232, 0.15);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(232, 232, 232, 0.2);
+  border: 1px solid rgba(180, 220, 255, 0.3);
   border-radius: 12px;
   width: 56px;
   height: 56px;
@@ -17,7 +17,9 @@
   align-items: center;
   justify-content: center;
   transition: all 0.3s ease;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3),
+              0 0 20px rgba(180, 220, 255, 0.2);
+  animation: sidebarTogglePulse 3s ease-in-out infinite alternate;
 }
 
 .sidebar-toggle:hover {
@@ -66,7 +68,7 @@
   background: rgba(0, 0, 0, 0.7);
   backdrop-filter: blur(4px);
   -webkit-backdrop-filter: blur(4px);
-  z-index: 998;
+  z-index: 2999;
 }
 
 /* Sidebar Container */
@@ -81,7 +83,7 @@
   backdrop-filter: blur(30px);
   -webkit-backdrop-filter: blur(30px);
   border-left: 1px solid rgba(232, 232, 232, 0.15);
-  z-index: 1000;
+  z-index: 3000;
   overflow-y: auto;
   box-shadow: -4px 0 24px rgba(0, 0, 0, 0.5);
 }
@@ -272,6 +274,22 @@
     width: 44px;
     height: 44px;
   }
+}
+
+/* Beautiful Sidebar Toggle Animation */
+@keyframes sidebarTogglePulse {
+  0% {
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3),
+                0 0 20px rgba(180, 220, 255, 0.2);
+  }
+  100% {
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4),
+                0 0 30px rgba(180, 220, 255, 0.4);
+  }
+}
+
+.sidebar-toggle {
+  animation: sidebarTogglePulse 2s infinite;
 }
 
 /* Smooth transitions */

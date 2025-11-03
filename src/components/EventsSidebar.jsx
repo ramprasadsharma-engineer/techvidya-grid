@@ -57,7 +57,8 @@ export default function EventsSidebar({ eventData, isVisible }) {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [eventData])
 
-  if (!isVisible) return null
+  // Keep component mounted if sidebar is open, even if visibility flag toggles off momentarily
+  if (!isVisible && !isOpen) return null
 
   return (
     <>

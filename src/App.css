@@ -356,7 +356,8 @@ img {
 /* Hardware acceleration for smooth animations */
 .hero-section,
 .about-section,
-.events-section,
+/* NOTE: do not apply transform to .events-section to avoid creating a stacking context
+   that interferes with position: fixed in the Events sidebar */
 .contact-section {
   transform: translateZ(0);
   will-change: scroll-position;
