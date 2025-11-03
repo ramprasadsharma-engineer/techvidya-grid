@@ -7,8 +7,41 @@ import EventsSidebar from './EventsSidebar'
 // Base URL for the brochure
 const BROCHURE_URL = "https://techvidya-2025-brochure.pages.dev/"
 
-// Base URL for registration form
-const REGISTRATION_FORM_BASE = "https://docs.google.com/forms/d/e/1FAIpQLSely-y9TGYJhExGmic3Qxx3WHndPGd-USkL5z9oHo6aOnnKzA/viewform?entry.574435312="
+// Individual Google Form links for each event
+const REGISTRATION_LINKS = {
+  "Paper Presentation": "https://forms.gle/wLUQQTFGkjBeDLX36",
+  "Platronics": "https://forms.gle/bqr8G9b6yJKJstqu7",
+  "Technical Quiz": "https://forms.gle/2vVpev6CiLh6PYKFA",
+  "Free Fire": "https://forms.gle/NtUvUi4KDTwaT1P5A",
+  "Technophilia": "https://forms.gle/MrjjweaCq1sTUwfV7",
+  "Optithon": "https://forms.gle/NVFNFnuMrAmWmg3eA",
+  "Webcraft": "https://forms.gle/PRv6Qsm7X3DJaRvn9",
+  "Valorant": "https://forms.gle/CSA342WYmE9qpUrU6",
+  "Capture the Flag": "https://forms.gle/fMMPeTUvKMEK8zmw7",
+  "VisualX": "https://forms.gle/w1FBTHR7n6znivy36",
+  "Clash Royale": "https://forms.gle/Kd2vDuUu6oNoRt7u5",
+  "Touch Me Not": "https://forms.gle/JHA16Bmv4Uv4Ja9t5",
+  "Cryptic Cross": "https://forms.gle/Lq7uzjX5UVr8C3h89",
+  "Guess the Prompt": "https://forms.gle/2RrN2fQyxX22H7Qo7",
+  "Code Decathlon": "https://forms.gle/vCZYoL5pwadWCVPk7",
+  "Artify": "https://forms.gle/s9BK9wGfoNhFqQ2M9",
+  "BattleGround Mobile India": "https://forms.gle/cSYUwK8HsTDpwrNv7",
+  "Escape Room Tech Version": "https://forms.gle/H69htvQD1YnptTFM9",
+  "Techenact": "https://forms.gle/VymUXFVphepe2ymF9",
+  "Mindify": "https://forms.gle/qWTnRuQLL5aR8ouc8",
+  "Imagify": "https://forms.gle/UQ6GFV7sLBwPa9mN8",
+  "Ludify": "https://forms.gle/y8uh8axDH2xFDZdV6",
+  "Science Spark": "https://forms.gle/nLkdzKSFXH2bmvuaA",
+  "CAD Clash": "https://forms.gle/oxazCkALhBX54c1X7",
+  "Bridge the Gap": "https://forms.gle/BDsgvqEz5wDd5jFt8",
+  "People Craft - Gen Z": "https://forms.gle/h6wHGxtkoae3bxJT7",
+  "Mark-King": "https://forms.gle/21JEE4jYWhrEDwuY8",
+  "The Data Hustle": "https://forms.gle/NPYPT8sEwUpxRSHo9",
+  "Link-o-Motion": "https://forms.gle/XPHjo1tnYg9TqP6L6",
+  "Dalal": "https://forms.gle/qNES7sLU1QsQqbYcA",
+  "Cryptohunt": "https://forms.gle/mfSsgnjxdYzxye2n9",
+  "Thermocol Modelling": "https://forms.gle/BvHvdLsoBAZeMjWN8"
+}
 
 const eventData = [
   {
@@ -19,7 +52,7 @@ const eventData = [
     time: "10:30 AM",
     registrationFee: "₹500",
     posterImage: "/event-posters/1.png",
-    registrationLink: `${REGISTRATION_FORM_BASE}Hackathon`,
+    registrationLink: null, // Hackathon doesn't have a form yet
     knowMoreLink: `${BROCHURE_URL}?page=3`,
     brochurePage: 3
   },
@@ -31,7 +64,7 @@ const eventData = [
     time: "9:00 AM",
     registrationFee: "₹300",
     posterImage: "/event-posters/2.png",
-    registrationLink: `${REGISTRATION_FORM_BASE}Paper+Presentation`,
+    registrationLink: REGISTRATION_LINKS["Paper Presentation"],
     knowMoreLink: `${BROCHURE_URL}?page=7`,
     brochurePage: 7
   },
@@ -43,7 +76,7 @@ const eventData = [
     time: "1:45 PM",
     registrationFee: "₹200",
     posterImage: "/event-posters/3.png",
-    registrationLink: `${REGISTRATION_FORM_BASE}Cryptohunt`,
+    registrationLink: REGISTRATION_LINKS["Cryptohunt"],
     knowMoreLink: `${BROCHURE_URL}?page=8`,
     brochurePage: 8
   },
@@ -55,7 +88,7 @@ const eventData = [
     time: "9:00 AM",
     registrationFee: "₹250",
     posterImage: "/event-posters/4.png",
-    registrationLink: `${REGISTRATION_FORM_BASE}Technophilia`,
+    registrationLink: REGISTRATION_LINKS["Technophilia"],
     knowMoreLink: `${BROCHURE_URL}?page=9`,
     brochurePage: 9
   },
@@ -67,7 +100,7 @@ const eventData = [
     time: "2:30 PM",
     registrationFee: "₹400",
     posterImage: "/event-posters/5.png",
-    registrationLink: `${REGISTRATION_FORM_BASE}Free+Fire`,
+    registrationLink: REGISTRATION_LINKS["Free Fire"],
     knowMoreLink: `${BROCHURE_URL}?page=10`,
     brochurePage: 10
   },
@@ -79,7 +112,7 @@ const eventData = [
     time: "1:00 PM",
     registrationFee: "₹300",
     posterImage: "/event-posters/6.png",
-    registrationLink: `${REGISTRATION_FORM_BASE}Clash+Royale`,
+    registrationLink: REGISTRATION_LINKS["Clash Royale"],
     knowMoreLink: `${BROCHURE_URL}?page=11`,
     brochurePage: 11
   },
@@ -91,7 +124,7 @@ const eventData = [
     time: "2:30 PM",
     registrationFee: "₹500",
     posterImage: "/event-posters/7.png",
-    registrationLink: `${REGISTRATION_FORM_BASE}Valorant`,
+    registrationLink: REGISTRATION_LINKS["Valorant"],
     knowMoreLink: `${BROCHURE_URL}?page=12`,
     brochurePage: 12
   },
@@ -103,7 +136,7 @@ const eventData = [
     time: "11:30 PM",
     registrationFee: "₹350",
     posterImage: "/event-posters/8.png",
-    registrationLink: `${REGISTRATION_FORM_BASE}Capture+The+Flag`,
+    registrationLink: REGISTRATION_LINKS["Capture the Flag"],
     knowMoreLink: `${BROCHURE_URL}?page=13`,
     brochurePage: 13
   },
@@ -115,7 +148,7 @@ const eventData = [
     time: "1:30 PM",
     registrationFee: "₹400",
     posterImage: "/event-posters/9.png",
-    registrationLink: `${REGISTRATION_FORM_BASE}Optithon`,
+    registrationLink: REGISTRATION_LINKS["Optithon"],
     knowMoreLink: `${BROCHURE_URL}?page=14`,
     brochurePage: 14
   },
@@ -127,7 +160,7 @@ const eventData = [
     time: "10:00 AM",
     registrationFee: "₹450",
     posterImage: "/event-posters/10.png",
-    registrationLink: `${REGISTRATION_FORM_BASE}Webscraft`,
+    registrationLink: REGISTRATION_LINKS["Webcraft"],
     knowMoreLink: `${BROCHURE_URL}?page=15`,
     brochurePage: 15
   },
@@ -139,7 +172,7 @@ const eventData = [
     time: "2:00 PM",
     registrationFee: "₹350",
     posterImage: "/event-posters/11.png",
-    registrationLink: `${REGISTRATION_FORM_BASE}VisualX`,
+    registrationLink: REGISTRATION_LINKS["VisualX"],
     knowMoreLink: `${BROCHURE_URL}?page=16`,
     brochurePage: 16
   },
@@ -151,7 +184,7 @@ const eventData = [
     time: "9:00 AM",
     registrationFee: "₹150",
     posterImage: "/event-posters/12.png",
-    registrationLink: `${REGISTRATION_FORM_BASE}Technical+Quiz`,
+    registrationLink: REGISTRATION_LINKS["Technical Quiz"],
     knowMoreLink: `${BROCHURE_URL}?page=14`,
     brochurePage: 14
   },
@@ -163,7 +196,7 @@ const eventData = [
     time: "2:00 PM",
     registrationFee: "₹600",
     posterImage: "/event-posters/13.png",
-    registrationLink: `${REGISTRATION_FORM_BASE}Platronics`,
+    registrationLink: REGISTRATION_LINKS["Platronics"],
     knowMoreLink: `${BROCHURE_URL}?page=15`,
     brochurePage: 15
   },
@@ -175,7 +208,7 @@ const eventData = [
     time: "9:00 AM",
     registrationFee: "₹200",
     posterImage: "/event-posters/14.png",
-    registrationLink: `${REGISTRATION_FORM_BASE}Touch+Me+Not`,
+    registrationLink: REGISTRATION_LINKS["Touch Me Not"],
     knowMoreLink: `${BROCHURE_URL}?page=19`,
     brochurePage: 19
   },
@@ -187,7 +220,7 @@ const eventData = [
     time: "11:00 AM",
     registrationFee: "₹250",
     posterImage: "/event-posters/15.png",
-    registrationLink: `${REGISTRATION_FORM_BASE}Techenact`,
+    registrationLink: REGISTRATION_LINKS["Techenact"],
     knowMoreLink: `${BROCHURE_URL}?page=20`,
     brochurePage: 20
   },
@@ -199,7 +232,7 @@ const eventData = [
     time: "1:00 PM",
     registrationFee: "₹100",
     posterImage: "/event-posters/16.png",
-    registrationLink: `${REGISTRATION_FORM_BASE}Cryptic+Cross`,
+    registrationLink: REGISTRATION_LINKS["Cryptic Cross"],
     knowMoreLink: `${BROCHURE_URL}?page=21`,
     brochurePage: 21
   },
@@ -211,7 +244,7 @@ const eventData = [
     time: "3:00 PM",
     registrationFee: "₹200",
     posterImage: "/event-posters/17.png",
-    registrationLink: `${REGISTRATION_FORM_BASE}Guess+The+Prompt`,
+    registrationLink: REGISTRATION_LINKS["Guess the Prompt"],
     knowMoreLink: `${BROCHURE_URL}?page=22`,
     brochurePage: 22
   },
@@ -223,7 +256,7 @@ const eventData = [
     time: "10:30 AM",
     registrationFee: "₹500",
     posterImage: "/event-posters/18.png",
-    registrationLink: `${REGISTRATION_FORM_BASE}Code+Decathlon`,
+    registrationLink: REGISTRATION_LINKS["Code Decathlon"],
     knowMoreLink: `${BROCHURE_URL}?page=23`,
     brochurePage: 23
   },
@@ -235,7 +268,7 @@ const eventData = [
     time: "12:00 PM",
     registrationFee: "₹400",
     posterImage: "/event-posters/19.png",
-    registrationLink: `${REGISTRATION_FORM_BASE}Escape+Room-Tech+Version`,
+    registrationLink: REGISTRATION_LINKS["Escape Room Tech Version"],
     knowMoreLink: `${BROCHURE_URL}?page=24`,
     brochurePage: 24
   },
@@ -247,7 +280,7 @@ const eventData = [
     time: "2:30 PM",
     registrationFee: "₹450",
     posterImage: "/event-posters/20.png",
-    registrationLink: `${REGISTRATION_FORM_BASE}BattleGround+Mobile+India`,
+    registrationLink: REGISTRATION_LINKS["BattleGround Mobile India"],
     knowMoreLink: `${BROCHURE_URL}?page=25`,
     brochurePage: 25
   },
@@ -259,7 +292,7 @@ const eventData = [
     time: "11:30 AM",
     registrationFee: "₹300",
     posterImage: "/event-posters/21.png",
-    registrationLink: `${REGISTRATION_FORM_BASE}Artify`,
+    registrationLink: REGISTRATION_LINKS["Artify"],
     knowMoreLink: `${BROCHURE_URL}?page=26`,
     brochurePage: 26
   },
@@ -271,7 +304,7 @@ const eventData = [
     time: "12:30 PM",
     registrationFee: "₹250",
     posterImage: "/event-posters/22.png",
-    registrationLink: `${REGISTRATION_FORM_BASE}Imagify`,
+    registrationLink: REGISTRATION_LINKS["Imagify"],
     knowMoreLink: `${BROCHURE_URL}?page=27`,
     brochurePage: 27
   },
@@ -283,7 +316,7 @@ const eventData = [
     time: "1:00 PM",
     registrationFee: "₹150",
     posterImage: "/event-posters/23.png",
-    registrationLink: `${REGISTRATION_FORM_BASE}Mindify`,
+    registrationLink: REGISTRATION_LINKS["Mindify"],
     knowMoreLink: `${BROCHURE_URL}?page=28`,
     brochurePage: 28
   },
@@ -295,7 +328,7 @@ const eventData = [
     time: "2:00 PM",
     registrationFee: "₹200",
     posterImage: "/event-posters/24.png",
-    registrationLink: `${REGISTRATION_FORM_BASE}Ludify`,
+    registrationLink: REGISTRATION_LINKS["Ludify"],
     knowMoreLink: `${BROCHURE_URL}?page=29`,
     brochurePage: 29
   },
@@ -307,7 +340,7 @@ const eventData = [
     time: "5:30 AM",
     registrationFee: "Free",
     posterImage: "/event-posters/25.png",
-    registrationLink: `${REGISTRATION_FORM_BASE}Science+Spark`,
+    registrationLink: REGISTRATION_LINKS["Science Spark"],
     knowMoreLink: `${BROCHURE_URL}?page=30`,
     brochurePage: 30
   },
@@ -319,7 +352,7 @@ const eventData = [
     time: "1:00 PM",
     registrationFee: "₹300",
     posterImage: "/event-posters/26.png",
-    registrationLink: `${REGISTRATION_FORM_BASE}Thermocool+Modelling`,
+    registrationLink: REGISTRATION_LINKS["Thermocol Modelling"],
     knowMoreLink: `${BROCHURE_URL}?page=31`,
     brochurePage: 31
   },
@@ -331,7 +364,7 @@ const eventData = [
     time: "10:30 AM",
     registrationFee: "₹400",
     posterImage: "/event-posters/27.png",
-    registrationLink: `${REGISTRATION_FORM_BASE}CAD+Clash`,
+    registrationLink: REGISTRATION_LINKS["CAD Clash"],
     knowMoreLink: `${BROCHURE_URL}?page=32`,
     brochurePage: 32
   },
@@ -343,7 +376,7 @@ const eventData = [
     time: "1:30 PM",
     registrationFee: "₹350",
     posterImage: "/event-posters/28.png",
-    registrationLink: `${REGISTRATION_FORM_BASE}Link-0-Motion`,
+    registrationLink: REGISTRATION_LINKS["Link-o-Motion"],
     knowMoreLink: `${BROCHURE_URL}?page=33`,
     brochurePage: 33
   },
@@ -355,7 +388,7 @@ const eventData = [
     time: "11:00 AM",
     registrationFee: "₹450",
     posterImage: "/event-posters/29.png",
-    registrationLink: `${REGISTRATION_FORM_BASE}BridgeThe+Gap`,
+    registrationLink: REGISTRATION_LINKS["Bridge the Gap"],
     knowMoreLink: `${BROCHURE_URL}?page=34`,
     brochurePage: 34
   },
@@ -367,7 +400,7 @@ const eventData = [
     time: "10:30 AM",
     registrationFee: "₹300",
     posterImage: "/event-posters/30.png",
-    registrationLink: `${REGISTRATION_FORM_BASE}Dalal`,
+    registrationLink: REGISTRATION_LINKS["Dalal"],
     knowMoreLink: `${BROCHURE_URL}?page=35`,
     brochurePage: 35
   },
@@ -379,7 +412,7 @@ const eventData = [
     time: "2:00 PM",
     registrationFee: "₹250",
     posterImage: "/event-posters/31.png",
-    registrationLink: `${REGISTRATION_FORM_BASE}People+Craft+-+Gen+Z`,
+    registrationLink: REGISTRATION_LINKS["People Craft - Gen Z"],
     knowMoreLink: `${BROCHURE_URL}?page=36`,
     brochurePage: 36
   },
@@ -391,7 +424,7 @@ const eventData = [
     time: "9:30 AM",
     registrationFee: "₹500",
     posterImage: "/event-posters/32.png",
-    registrationLink: `${REGISTRATION_FORM_BASE}The+Data+Hustle`,
+    registrationLink: REGISTRATION_LINKS["The Data Hustle"],
     knowMoreLink: `${BROCHURE_URL}?page=37`,
     brochurePage: 37
   },
@@ -403,7 +436,7 @@ const eventData = [
     time: "1:30 PM",
     registrationFee: "₹350",
     posterImage: "/event-posters/33.png",
-    registrationLink: `${REGISTRATION_FORM_BASE}Mark-King`,
+    registrationLink: REGISTRATION_LINKS["Mark-King"],
     knowMoreLink: `${BROCHURE_URL}?page=38`,
     brochurePage: 38
   }
@@ -509,7 +542,7 @@ export default function Events() {
                     Know More
                   </motion.a>
                 )}
-                {event.title === "Hackathon" ? (
+                {!event.registrationLink ? (
                   <motion.div
                     className="event-btn register-btn coming-soon-btn"
                     whileHover={{ scale: 1.05 }}
@@ -522,6 +555,8 @@ export default function Events() {
                   <motion.a
                     href={event.registrationLink}
                     className="event-btn register-btn"
+                    target="_blank"
+                    rel="noopener noreferrer"
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                   >
