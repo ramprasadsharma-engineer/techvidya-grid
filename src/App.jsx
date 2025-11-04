@@ -3,6 +3,7 @@ import Navbar from './components/Navbar'
 import Hero from './components/Hero'
 import BreathingGrid from './components/BreathingGrid'
 import SocialSidebar from './components/SocialSidebar'
+import LeaderboardSidebar from './components/LeaderboardSidebar'
 import './App.css'
 
 // Lazy load heavy components for better initial load performance
@@ -15,6 +16,7 @@ const ParticleBackground = lazy(() => import('./components/ParticleBackground'))
 function App() {
   const [scrollY, setScrollY] = useState(0)
   const [isLoading, setIsLoading] = useState(true)
+  const [leaderboardOpen, setLeaderboardOpen] = useState(false)
 
   // Throttled scroll handler for better performance
   useEffect(() => {
@@ -53,6 +55,13 @@ function App() {
     }
   }, [])
 
+  // Open the Leaderboard sidebar when the global event is dispatched
+  useEffect(() => {
+    const handler = () => setLeaderboardOpen(true)
+    window.addEventListener('open-leaderboard', handler)
+    return () => window.removeEventListener('open-leaderboard', handler)
+  }, [])
+
   // Loading component
   const LoadingFallback = () => (
     <div className="loading-fallback">
@@ -67,6 +76,7 @@ function App() {
         <ParticleBackground />
       </Suspense>
       <SocialSidebar />
+      <LeaderboardSidebar open={leaderboardOpen} onClose={() => setLeaderboardOpen(false)} />
       <Navbar scrollY={scrollY} />
       <Hero />
       <Suspense fallback={<LoadingFallback />}>

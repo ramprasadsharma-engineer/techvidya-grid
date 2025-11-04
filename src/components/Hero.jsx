@@ -173,6 +173,19 @@ export default function Hero() {
             <span className="button-icon">→</span>
             <div className="button-shine" />
           </motion.button>
+          
+          <motion.button
+            className="cta-button-golden"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            onClick={() => {
+              window.dispatchEvent(new CustomEvent('open-leaderboard'));
+            }}
+          >
+            <span className="button-text">Leaderboard</span>
+            <span className="button-icon">🏆</span>
+            <div className="button-shine" />
+          </motion.button>
         </motion.div>
       </motion.div>
     </section>
