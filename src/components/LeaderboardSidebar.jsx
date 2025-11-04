@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
+import { firebaseService } from '../services/firebaseService'
 import './EventsSidebar.css'
 import { eventData } from '../data/events'
 
@@ -15,19 +16,21 @@ export default function LeaderboardSidebar({ open, onClose }) {
   }, [])
 
   useEffect(() => {
-    // Load winners from localStorage
-    const loadWinners = () => {
-      const storedWinners = localStorage.getItem('eventWinners')
-      if (storedWinners) {
-        setWinners(JSON.parse(storedWinners))
+    // Load winners from Firebase
+    const loadWinners = async () => {
+      try {
+        const allWinners = await firebaseService.getAllWinners()
+        setWinners(allWinners)
+      } catch (error) {
+        console.error('Error loading winners:', error)
       }
     }
     
     loadWinners()
     
-    // Listen for storage changes (when admin updates winners)
-    window.addEventListener('storage', loadWinners)
-    return () => window.removeEventListener('storage', loadWinners)
+    // Reload winners every 30 seconds to get updates
+    const interval = setInterval(loadWinners, 30000)
+    return () => clearInterval(interval)
   }, [])
 
   useEffect(() => {

@@ -1,6 +1,9 @@
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useNavigate } from 'react-router-dom'
+import { onAuthStateChanged } from 'firebase/auth'
+import { auth } from '../lib/firebase'
+import { firebaseService } from '../services/firebaseService'
 import './AdminPanel.css'
 import { eventData } from '../data/events'
 
@@ -15,24 +18,48 @@ export default function AdminPanel() {
   const [searchQuery, setSearchQuery] = useState('')
 
   useEffect(() => {
-    // Check authentication
-    const auth = localStorage.getItem('adminAuth')
-    if (!auth) {
-      navigate('/authlogin')
-      return
-    }
-    setAdminInfo(JSON.parse(auth))
+    // Check Firebase authentication
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        const adminAuth = localStorage.getItem('adminAuth')
+        if (adminAuth) {
+          setAdminInfo(JSON.parse(adminAuth))
+        }
+      } else {
+        navigate('/authlogin')
+      }
+    })
 
-    // Load winners from localStorage (simulating database)
-    const storedWinners = localStorage.getItem('eventWinners')
-    if (storedWinners) {
-      setWinners(JSON.parse(storedWinners))
-    }
+    return () => unsubscribe()
   }, [navigate])
 
-  const handleLogout = () => {
-    localStorage.removeItem('adminAuth')
-    navigate('/authlogin')
+  useEffect(() => {
+    // Load all winners from Firestore
+    const loadAllWinners = async () => {
+      try {
+        const allWinners = await firebaseService.getAllWinners()
+        setWinners(allWinners)
+      } catch (error) {
+        console.error('Error loading winners:', error)
+      }
+    }
+
+    if (adminInfo) {
+      loadAllWinners()
+    }
+  }, [adminInfo])
+
+  const handleLogout = async () => {
+    try {
+      await firebaseService.logout()
+      localStorage.removeItem('adminAuth')
+      navigate('/authlogin')
+    } catch (error) {
+      console.error('Logout error:', error)
+      // Still navigate even if logout fails
+      localStorage.removeItem('adminAuth')
+      navigate('/authlogin')
+    }
   }
 
   const handleEventSelect = (event) => {
@@ -71,30 +98,51 @@ export default function AdminPanel() {
     setTeamMembers(updated)
   }
 
-  const saveWinners = () => {
-    const updatedWinners = {
-      ...winners,
-      [selectedEvent.id]: {
-        ...winners[selectedEvent.id],
-        [editMode]: teamMembers.filter(m => m.name.trim() !== '')
+  const saveWinners = async () => {
+    try {
+      const validMembers = teamMembers.filter(m => m.name.trim() !== '')
+      
+      await firebaseService.saveWinners(
+        selectedEvent.id,
+        editMode,
+        validMembers,
+        adminInfo.email
+      )
+
+      // Update local state
+      const updatedWinners = {
+        ...winners,
+        [selectedEvent.id]: {
+          ...winners[selectedEvent.id],
+          [editMode]: validMembers
+        }
       }
+      setWinners(updatedWinners)
+      setEditMode(null)
+      alert('Winners saved successfully!')
+    } catch (error) {
+      console.error('Error saving winners:', error)
+      alert('Error saving winners: ' + error.message)
     }
-    setWinners(updatedWinners)
-    localStorage.setItem('eventWinners', JSON.stringify(updatedWinners))
-    setEditMode(null)
-    alert('Winners saved successfully!')
   }
 
-  const deleteWinners = (position) => {
+  const deleteWinners = async (position) => {
     if (!confirm(`Are you sure you want to delete ${position} place winners?`)) return
     
-    const updatedWinners = { ...winners }
-    if (updatedWinners[selectedEvent.id]) {
-      delete updatedWinners[selectedEvent.id][position]
+    try {
+      await firebaseService.deleteWinners(selectedEvent.id, position)
+
+      // Update local state
+      const updatedWinners = { ...winners }
+      if (updatedWinners[selectedEvent.id]) {
+        delete updatedWinners[selectedEvent.id][position]
+      }
+      setWinners(updatedWinners)
+      alert('Winners deleted successfully!')
+    } catch (error) {
+      console.error('Error deleting winners:', error)
+      alert('Error deleting winners: ' + error.message)
     }
-    setWinners(updatedWinners)
-    localStorage.setItem('eventWinners', JSON.stringify(updatedWinners))
-    alert('Winners deleted successfully!')
   }
 
   const cancelEdit = () => {

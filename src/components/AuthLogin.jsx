@@ -1,22 +1,8 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { useNavigate } from 'react-router-dom'
+import { firebaseService } from '../services/firebaseService'
 import './AuthLogin.css'
-
-// Predefined admin credentials (in production, this should be in backend)
-const ADMIN_CREDENTIALS = {
-  'cse_admin': 'CSE@2025#tech',
-  'aiml_admin': 'AIML@2025#tech',
-  'ise_admin': 'ISE@2025#tech',
-  'ec_admin': 'EC@2025#tech',
-  'mech_admin': 'MECH@2025#tech',
-  'civil_admin': 'CIVIL@2025#tech',
-  'mba_admin': 'MBA@2025#tech',
-  'ds_admin': 'DS@2025#tech',
-  'webmaster': 'WEB@master#2025!',
-  'convenor': 'CONV@enor#2025!',
-  'chief_coordinator': 'CHIEF@coord#2025!'
-}
 
 export default function AuthLogin() {
   const [username, setUsername] = useState('')
@@ -25,26 +11,32 @@ export default function AuthLogin() {
   const [loading, setLoading] = useState(false)
   const navigate = useNavigate()
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault()
     setError('')
     setLoading(true)
 
-    // Simulate authentication delay
-    setTimeout(() => {
-      if (ADMIN_CREDENTIALS[username] === password) {
-        // Store auth token in localStorage
-        localStorage.setItem('adminAuth', JSON.stringify({
-          username,
-          department: username.replace('_admin', '').toUpperCase(),
-          timestamp: Date.now()
-        }))
-        navigate('/admin')
-      } else {
-        setError('Invalid username or password')
-      }
+    try {
+      // Convert username to email format if needed
+      const email = username.includes('@') ? username : `${username}@techvidya.com`
+      
+      const result = await firebaseService.login(email, password)
+      
+      // Store auth info in localStorage
+      localStorage.setItem('adminAuth', JSON.stringify({
+        uid: result.user.uid,
+        username: result.admin.username,
+        department: result.admin.department,
+        email: result.admin.email,
+        timestamp: Date.now()
+      }))
+      
+      navigate('/admin')
+    } catch (error) {
+      setError(error.message || 'Invalid email or password')
+    } finally {
       setLoading(false)
-    }, 500)
+    }
   }
 
   return (
