@@ -1,6 +1,7 @@
 export const BROCHURE_URL = "https://techvidya-2025-brochure.pages.dev/";
 
 export const REGISTRATION_LINKS = {
+  "HackBlaze": "https://forms.gle/hackblaze2025",
   "Paper Presentation": "https://forms.gle/wLUQQTFGkjBeDLX36",
   "Platronics": "https://forms.gle/bqr8G9b6yJKJstqu7",
   "Technical Quiz": "https://forms.gle/2vVpev6CiLh6PYKFA",
@@ -36,15 +37,18 @@ export const REGISTRATION_LINKS = {
 };
 
 export const eventData = [
+  // November 14, 2025 Events
   {
     id: 1,
-    title: "Hackathon",
+    title: "HackBlaze",
     description: "A hackathon to build innovative solutions for real-world problems.",
     date: "November 14, 2025",
-    time: "8:00 AM",
+    time: "9:00 AM",
+    venue: "LH 021",
     registrationFee: "₹500",
+    teamSize: "2 to 4",
     posterImage: "/event-posters/1.png",
-    registrationLink: null,
+    registrationLink: REGISTRATION_LINKS["HackBlaze"],
     knowMoreLink: `${BROCHURE_URL}?page=3`,
     brochurePage: 3
   },

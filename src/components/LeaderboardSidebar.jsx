@@ -23,6 +23,8 @@ export default function LeaderboardSidebar({ open, onClose }) {
         setWinners(allWinners)
       } catch (error) {
         console.error('Error loading winners:', error)
+        // Set empty winners to prevent infinite loading
+        setWinners({})
       }
     }
     
