@@ -5,13 +5,13 @@ import { getAuth } from 'firebase/auth'
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyD1ggJ3TK7WPM6gcnSAuPgG-rKaAd__aDg",
-  authDomain: "techvidya-admin.firebaseapp.com",
-  projectId: "techvidya-admin",
-  storageBucket: "techvidya-admin.firebasestorage.app",
-  messagingSenderId: "145993675101",
-  appId: "1:145993675101:web:dc3342591645a1c197b8b4",
-  measurementId: "G-Y8VY39PR3X"
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+  appId: import.meta.env.VITE_FIREBASE_APP_ID,
+  measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID
 }
 
 // Initialize Firebase
