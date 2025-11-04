@@ -116,5 +116,51 @@ export const firebaseService = {
       console.error('Error deleting winners:', error)
       throw new Error('Failed to delete winners')
     }
+  },
+
+  // Event Status Management
+  async updateEventStatus(eventId, status, adminEmail) {
+    try {
+      await setDoc(doc(db, 'eventStatuses', eventId.toString()), {
+        eventId: parseInt(eventId),
+        status,
+        updatedAt: new Date(),
+        updatedBy: adminEmail
+      })
+      return true
+    } catch (error) {
+      console.error('Error updating event status:', error)
+      throw new Error('Failed to update event status')
+    }
+  },
+
+  async getEventStatus(eventId) {
+    try {
+      const docSnap = await getDoc(doc(db, 'eventStatuses', eventId.toString()))
+      if (docSnap.exists()) {
+        return docSnap.data().status
+      }
+      return 'active' // Default status
+    } catch (error) {
+      console.error('Error getting event status:', error)
+      return 'active'
+    }
+  },
+
+  async getAllEventStatuses() {
+    try {
+      const querySnapshot = await getDocs(collection(db, 'eventStatuses'))
+      const statuses = {}
+      
+      querySnapshot.forEach((doc) => {
+        const data = doc.data()
+        statuses[data.eventId] = data.status
+      })
+      
+      return statuses
+    } catch (error) {
+      console.error('Error getting all event statuses:', error)
+      return {}
+    }
   }
 }

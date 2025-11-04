@@ -183,6 +183,15 @@
   margin-bottom: 2rem;
   padding-bottom: 1.5rem;
   border-bottom: 1px solid rgba(232, 232, 232, 0.1);
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.event-title-section {
+  flex: 1;
 }
 
 .event-header h2 {
@@ -198,6 +207,72 @@
   font-size: 0.875rem;
   color: rgba(255, 255, 255, 0.5);
   margin: 0;
+}
+
+/* Event Status Section */
+.event-status-section {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.event-status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.875rem;
+  font-weight: 500;
+  border: 1px solid;
+}
+
+.event-status-badge.active {
+  background: rgba(0, 255, 0, 0.1);
+  border-color: rgba(0, 255, 0, 0.3);
+  color: #00ff00;
+}
+
+.event-status-badge.closed {
+  background: rgba(255, 0, 0, 0.1);
+  border-color: rgba(255, 0, 0, 0.3);
+  color: #ff6b6b;
+}
+
+.status-toggle-btn {
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.875rem;
+  font-weight: 500;
+  border: 1px solid;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.status-toggle-btn.close {
+  background: rgba(255, 100, 0, 0.1);
+  border-color: rgba(255, 100, 0, 0.3);
+  color: #ff9500;
+}
+
+.status-toggle-btn.close:hover {
+  background: rgba(255, 100, 0, 0.2);
+  border-color: rgba(255, 100, 0, 0.5);
+  box-shadow: 0 4px 12px rgba(255, 100, 0, 0.3);
+}
+
+.status-toggle-btn.reopen {
+  background: rgba(0, 200, 100, 0.1);
+  border-color: rgba(0, 200, 100, 0.3);
+  color: #00c864;
+}
+
+.status-toggle-btn.reopen:hover {
+  background: rgba(0, 200, 100, 0.2);
+  border-color: rgba(0, 200, 100, 0.5);
+  box-shadow: 0 4px 12px rgba(0, 200, 100, 0.3);
 }
 
 /* Winners Sections */

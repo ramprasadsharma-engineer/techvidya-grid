@@ -5,7 +5,7 @@ import { onAuthStateChanged } from 'firebase/auth'
 import { auth } from '../lib/firebase'
 import { firebaseService } from '../services/firebaseService'
 import './AdminPanel.css'
-import { eventData } from '../data/events'
+import { sortedEventData } from '../data/events'
 
 export default function AdminPanel() {
   const navigate = useNavigate()
@@ -16,6 +16,7 @@ export default function AdminPanel() {
   const [teamSize, setTeamSize] = useState({ first: 1, second: 1, third: 1 })
   const [teamMembers, setTeamMembers] = useState([])
   const [searchQuery, setSearchQuery] = useState('')
+  const [eventStatuses, setEventStatuses] = useState({})
 
   useEffect(() => {
     // Check Firebase authentication
@@ -34,18 +35,22 @@ export default function AdminPanel() {
   }, [navigate])
 
   useEffect(() => {
-    // Load all winners from Firestore
-    const loadAllWinners = async () => {
+    // Load all winners and event statuses from Firestore
+    const loadData = async () => {
       try {
-        const allWinners = await firebaseService.getAllWinners()
+        const [allWinners, allStatuses] = await Promise.all([
+          firebaseService.getAllWinners(),
+          firebaseService.getAllEventStatuses()
+        ])
         setWinners(allWinners)
+        setEventStatuses(allStatuses)
       } catch (error) {
-        console.error('Error loading winners:', error)
+        console.error('Error loading data:', error)
       }
     }
 
     if (adminInfo) {
-      loadAllWinners()
+      loadData()
     }
   }, [adminInfo])
 
@@ -72,7 +77,7 @@ export default function AdminPanel() {
     const currentWinners = winners[selectedEvent.id]?.[position] || []
     const size = currentWinners.length || 1
     setTeamSize({ ...teamSize, [position]: size })
-    setTeamMembers(currentWinners.length ? currentWinners : [{ name: '', college: '', department: '' }])
+    setTeamMembers(currentWinners.length ? currentWinners : [{ name: '', year: '', college: '', department: '' }])
   }
 
   const handleTeamSizeChange = (position, size) => {
@@ -83,7 +88,7 @@ export default function AdminPanel() {
     if (newSize > current.length) {
       // Add empty members
       for (let i = current.length; i < newSize; i++) {
-        current.push({ name: '', college: '', department: '' })
+        current.push({ name: '', year: '', college: '', department: '' })
       }
     } else {
       // Remove extra members
@@ -150,7 +155,26 @@ export default function AdminPanel() {
     setTeamMembers([])
   }
 
-  const filteredEvents = eventData.filter(event =>
+  const toggleEventStatus = async (eventId) => {
+    try {
+      const currentStatus = eventStatuses[eventId] || 'active'
+      const newStatus = currentStatus === 'closed' ? 'active' : 'closed'
+      
+      await firebaseService.updateEventStatus(eventId, newStatus, adminInfo.email)
+      
+      setEventStatuses({
+        ...eventStatuses,
+        [eventId]: newStatus
+      })
+      
+      alert(`Event ${newStatus === 'closed' ? 'closed' : 'reopened'} successfully!`)
+    } catch (error) {
+      console.error('Error updating event status:', error)
+      alert('Error updating event status: ' + error.message)
+    }
+  }
+
+  const filteredEvents = sortedEventData.filter(event =>
     event.title.toLowerCase().includes(searchQuery.toLowerCase())
   )
 
@@ -215,8 +239,23 @@ export default function AdminPanel() {
           ) : (
             <div className="event-management">
               <div className="event-header">
-                <h2>{selectedEvent.title}</h2>
-                <p>{selectedEvent.date} · {selectedEvent.time}</p>
+                <div className="event-title-section">
+                  <h2>{selectedEvent.title}</h2>
+                  <p>{selectedEvent.date} · {selectedEvent.time}</p>
+                </div>
+                <div className="event-status-section">
+                  <span className={`event-status-badge ${eventStatuses[selectedEvent.id] === 'closed' ? 'closed' : 'active'}`}>
+                    {eventStatuses[selectedEvent.id] === 'closed' ? '🔒 Closed' : '✅ Active'}
+                  </span>
+                  <motion.button
+                    className={`status-toggle-btn ${eventStatuses[selectedEvent.id] === 'closed' ? 'reopen' : 'close'}`}
+                    onClick={() => toggleEventStatus(selectedEvent.id)}
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                  >
+                    {eventStatuses[selectedEvent.id] === 'closed' ? 'Reopen Event' : 'Close Event'}
+                  </motion.button>
+                </div>
               </div>
 
               {/* Winners Management */}
@@ -278,15 +317,21 @@ export default function AdminPanel() {
                               />
                               <input
                                 type="text"
-                                placeholder="College"
-                                value={member.college}
-                                onChange={(e) => handleMemberChange(index, 'college', e.target.value)}
+                                placeholder="Year (e.g., 1st, 2nd, 3rd, 4th)"
+                                value={member.year}
+                                onChange={(e) => handleMemberChange(index, 'year', e.target.value)}
                               />
                               <input
                                 type="text"
                                 placeholder="Department"
                                 value={member.department}
                                 onChange={(e) => handleMemberChange(index, 'department', e.target.value)}
+                              />
+                              <input
+                                type="text"
+                                placeholder="College"
+                                value={member.college}
+                                onChange={(e) => handleMemberChange(index, 'college', e.target.value)}
                               />
                             </div>
                           </div>
@@ -318,7 +363,7 @@ export default function AdminPanel() {
                             <div key={index} className="winner-card">
                               <div className="winner-info">
                                 <p className="winner-name">{member.name}</p>
-                                <p className="winner-details">{member.college} · {member.department}</p>
+                                <p className="winner-details">{member.year && `${member.year} Year · `}{member.department} · {member.college}</p>
                               </div>
                             </div>
                           ))

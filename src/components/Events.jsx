@@ -3,7 +3,7 @@ import { useInView } from 'framer-motion'
 import { useRef, useState, useEffect } from 'react'
 import './Events.css'
 import EventsSidebar from './EventsSidebar'
-import { eventData } from '../data/events'
+import { sortedEventData } from '../data/events'
 
 
 export default function Events() {
@@ -47,10 +47,10 @@ export default function Events() {
         EVENTS
       </motion.h2>
 
-      <EventsSidebar eventData={eventData} isVisible={sidebarVisible} />
+      <EventsSidebar eventData={sortedEventData} isVisible={sidebarVisible} />
 
       <div className="events-grid">
-        {eventData.map((event, index) => (
+        {sortedEventData.map((event, index) => (
           <motion.div
             key={event.id}
             id={`event-${event.id}`}
@@ -85,15 +85,17 @@ export default function Events() {
               </div>
               
               <div className="event-buttons">
-                {event.id === 1 ? (
-                  <motion.div
+                {event.embedWebsite ? (
+                  <motion.a
+                    href={event.embedWebsite}
                     className="event-btn know-more-btn"
+                    target="_blank"
+                    rel="noopener noreferrer"
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
-                    style={{ cursor: 'not-allowed', opacity: 0.7 }}
                   >
-                    Website
-                  </motion.div>
+                    Visit Website
+                  </motion.a>
                 ) : (
                   <motion.a
                     href={event.knowMoreLink}

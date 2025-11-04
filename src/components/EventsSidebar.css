@@ -256,6 +256,12 @@
   color: #00ffaa;
 }
 
+.status-pill.closed {
+  border-color: rgba(255, 50, 50, 0.4);
+  background: rgba(255, 50, 50, 0.15);
+  color: #ff6b6b;
+}
+
 /* Mobile Responsive */
 @media (max-width: 768px) {
   .sidebar-toggle {
@@ -327,6 +333,112 @@
 
 .sidebar-toggle {
   animation: sidebarTogglePulse 2s infinite;
+}
+
+/* Event Venue in Sidebar */
+.event-info .event-venue {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.75rem;
+  color: var(--text-primary);
+  margin: 0.3rem 0 0.5rem 0;
+  opacity: 0.8;
+}
+
+/* Check Winners Button */
+.check-winners-btn {
+  margin-top: 0.5rem;
+  padding: 0.4rem 0.8rem;
+  background: linear-gradient(135deg, rgba(180, 220, 255, 0.1) 0%, rgba(232, 232, 232, 0.05) 100%);
+  border: 1px solid rgba(180, 220, 255, 0.3);
+  border-radius: 6px;
+  color: var(--accent);
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.75rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.check-winners-btn:hover {
+  background: linear-gradient(135deg, rgba(180, 220, 255, 0.2) 0%, rgba(232, 232, 232, 0.1) 100%);
+  border-color: var(--accent);
+  box-shadow: 0 4px 12px rgba(180, 220, 255, 0.2);
+  transform: translateY(-1px);
+}
+
+/* Winner Details Preview Styles */
+.winner-details-preview {
+  margin-top: 0.5rem;
+  padding: 0.5rem 0;
+  border-top: 1px solid rgba(232, 232, 232, 0.1);
+}
+
+.winner-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  margin-bottom: 0.4rem;
+  padding: 0.3rem 0;
+}
+
+.winner-item:last-child {
+  margin-bottom: 0;
+}
+
+.winner-position {
+  font-size: 1rem;
+  flex-shrink: 0;
+  margin-top: 0.1rem;
+}
+
+.winner-info-preview {
+  flex: 1;
+  min-width: 0;
+}
+
+.winner-name-preview {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin: 0 0 0.2rem 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.winner-meta {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.65rem;
+  color: var(--text-muted);
+  margin: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  opacity: 0.8;
+}
+
+/* Leaderboard Sidebar Specific Styles */
+.leaderboard-sidebar-left .winner-details-preview {
+  background: rgba(232, 232, 232, 0.03);
+  border-radius: 8px;
+  padding: 0.6rem;
+  margin-top: 0.6rem;
+}
+
+.leaderboard-sidebar-left .winner-item {
+  background: rgba(232, 232, 232, 0.05);
+  border-radius: 6px;
+  padding: 0.5rem;
+  transition: all 0.2s ease;
+}
+
+.leaderboard-sidebar-left .winner-item:hover {
+  background: rgba(232, 232, 232, 0.08);
+  transform: translateX(2px);
 }
 
 /* Smooth transitions */

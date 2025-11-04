@@ -2,13 +2,17 @@ import { useEffect, useMemo, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { firebaseService } from '../services/firebaseService'
 import './EventsSidebar.css'
-import { eventData } from '../data/events'
+import { sortedEventData } from '../data/events'
+import WinnersDetailSidebar from './WinnersDetailSidebar'
 
 const toDate = (dateStr, timeStr) => new Date(`${dateStr} ${timeStr}`)
 
 export default function LeaderboardSidebar({ open, onClose }) {
   const [now, setNow] = useState(Date.now())
   const [winners, setWinners] = useState({})
+  const [selectedEvent, setSelectedEvent] = useState(null)
+  const [winnersDetailOpen, setWinnersDetailOpen] = useState(false)
+  const [eventStatuses, setEventStatuses] = useState({})
 
   useEffect(() => {
     const i = setInterval(() => setNow(Date.now()), 30000)
@@ -16,22 +20,27 @@ export default function LeaderboardSidebar({ open, onClose }) {
   }, [])
 
   useEffect(() => {
-    // Load winners from Firebase
-    const loadWinners = async () => {
+    // Load winners and event statuses from Firebase
+    const loadData = async () => {
       try {
-        const allWinners = await firebaseService.getAllWinners()
+        const [allWinners, allStatuses] = await Promise.all([
+          firebaseService.getAllWinners(),
+          firebaseService.getAllEventStatuses()
+        ])
         setWinners(allWinners)
+        setEventStatuses(allStatuses)
       } catch (error) {
-        console.error('Error loading winners:', error)
-        // Set empty winners to prevent infinite loading
+        console.error('Error loading data:', error)
+        // Set empty data to prevent infinite loading
         setWinners({})
+        setEventStatuses({})
       }
     }
     
-    loadWinners()
+    loadData()
     
-    // Reload winners every 30 seconds to get updates
-    const interval = setInterval(loadWinners, 30000)
+    // Reload data every 30 seconds to get updates
+    const interval = setInterval(loadData, 30000)
     return () => clearInterval(interval)
   }, [])
 
@@ -45,21 +54,23 @@ export default function LeaderboardSidebar({ open, onClose }) {
 
   const items = useMemo(() => {
     const n = new Date(now)
-    return eventData
+    return sortedEventData
       .map(e => {
         const start = toDate(e.date, e.time)
-        const status = n >= start ? 'Active' : 'Upcoming'
+        const isClosed = eventStatuses[e.id] === 'closed'
+        const status = isClosed ? 'Closed' : (n >= start ? 'Active' : 'Upcoming')
         return { ...e, start, status }
       })
-      .sort((a, b) => a.start - b.start)
-  }, [now])
+  }, [now, eventStatuses])
 
-  const scrollToEvent = (eventId) => {
-    const el = document.getElementById(`event-${eventId}`)
-    if (el) {
-      el.scrollIntoView({ behavior: 'smooth', block: 'center' })
-      setTimeout(() => onClose?.(), 300)
-    }
+  const handleCheckWinners = (event) => {
+    setSelectedEvent(event)
+    setWinnersDetailOpen(true)
+  }
+
+  const closeWinnersDetail = () => {
+    setWinnersDetailOpen(false)
+    setSelectedEvent(null)
   }
 
   return (
@@ -97,28 +108,45 @@ export default function LeaderboardSidebar({ open, onClose }) {
                   <motion.div
                     key={event.id}
                     className={`sidebar-event-item ${event.status === 'Active' ? 'active' : ''}`}
-                    onClick={() => scrollToEvent(event.id)}
                     initial={{ opacity: 0, x: 20 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: index * 0.03 }}
-                    whileHover={{ x: 10, backgroundColor: 'rgba(232, 232, 232, 0.1)' }}
+                    whileHover={{ backgroundColor: 'rgba(232, 232, 232, 0.1)' }}
                   >
                     <div className="event-info">
                       <h4>{event.title}</h4>
                       <p className="event-date">{event.date} · {event.time}</p>
-                      {hasWinners && winners[event.id].first?.length > 0 && (
-                        <p className="winner-preview">
-                          🏆 {winners[event.id].first[0].name}
-                        </p>
+                      <p className="event-venue">📍 {event.venue}</p>
+                      {hasWinners && (
+                        <motion.button
+                          className="check-winners-btn"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleCheckWinners(event);
+                          }}
+                          whileHover={{ scale: 1.05 }}
+                          whileTap={{ scale: 0.95 }}
+                        >
+                          🏆 Check Winners
+                        </motion.button>
                       )}
                     </div>
 
-                    <span className={`status-pill ${event.status.toLowerCase()}`}>{event.status}</span>
+                    <span className={`status-pill ${event.status.toLowerCase()}`}>
+                      {event.status === 'Closed' ? '🔒 ' : ''}{event.status}
+                    </span>
                   </motion.div>
                 )
               })}
             </div>
           </motion.div>
+
+          <WinnersDetailSidebar
+            open={winnersDetailOpen}
+            onClose={closeWinnersDetail}
+            event={selectedEvent}
+            winners={winners}
+          />
         </>
       )}
     </AnimatePresence>
