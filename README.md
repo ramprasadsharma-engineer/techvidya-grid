@@ -1,4 +1,4 @@
-# 🎉 TECHVIDYA 2K25 - Grid Theme
+# 🎉 TECHVIDYA 2K25 - CHANAKYOTSAV WEBSITE
 
 A high-performance, modern React-based website for the annual technical festival by Sai Vidya Institute of Technology. Featuring cutting-edge animations, optimized cursor interactions, and stunning visual effects.
 
@@ -43,103 +43,6 @@ npm run build
 # Preview production build
 npm run preview
 ```
-
-## 🎯 Project Structure
-
-```
-Grid-Theme/
-├── src/
-│   ├── components/
-│   │   ├── About.jsx               # About section with animations
-│   │   ├── About.css               # About section styles
-│   │   ├── BreathingGrid.jsx       # Dynamic grid background
-│   │   ├── BreathingGrid.css       # Grid animation styles
-│   │   ├── Contact.jsx             # Contact/Team section
-│   │   ├── Contact.css             # Contact styles
-│   │   ├── Events.jsx              # 33 event cards with full descriptions
-│   │   ├── Events.css              # Event card styles
-│   │   ├── EventsSidebar.jsx       # Navigation sidebar for events
-│   │   ├── EventsSidebar.css       # Sidebar styles
-│   │   ├── Footer.jsx              # Footer with social links
-│   │   ├── Footer.css              # Footer styles
-│   │   ├── Hero.jsx                # Hero section with liquid text
-│   │   ├── Hero.css                # Hero animations
-│   │   ├── MagneticCursor.jsx      # Custom cursor with magnetic effects
-│   │   ├── MagneticCursor.css      # Cursor animations
-│   │   ├── Navbar.jsx              # Navigation with scroll effects
-│   │   ├── Navbar.css              # Navigation styles
-│   │   ├── ParticleBackground.jsx  # 3D particle system (lazy loaded)
-│   │   ├── SocialSidebar.jsx       # Social media links
-│   │   └── SocialSidebar.css       # Social sidebar styles
-│   ├── App.jsx                     # Main app with lazy loading
-│   ├── App.css                     # Global styles & performance CSS
-│   ├── main.jsx                    # Entry point
-│   └── index.css                   # Base styles
-├── public/
-│   └── event-posters/              # Event poster images (1-33)
-├── index.html                      # HTML template
-├── package.json                    # Dependencies & PWA scripts
-├── vite.config.js                  # Vite configuration with PWA
-└── Documentation/
-    ├── CHANGELOG.md                # Version history
-    ├── DEPLOYMENT.md               # Deployment guide
-    ├── FEATURES.md                 # Feature documentation
-    ├── MOBILE-TESTING-CHECKLIST.md # Mobile testing guide
-    ├── PWA-SETUP.md               # PWA implementation guide
-    ├── QUICK-START.md             # Quick start guide
-    └── SSR-IMPLEMENTATION-GUIDE.md # SSR guide
-```
-
-## 🎨 Customization
-
-### Update Events
-Edit the `eventData` array in `src/components/Events.jsx`:
-
-```javascript
-const eventData = [
-  {
-    id: 1,
-    title: "Hackathon",
-    description: "A hackathon to build innovative solutions for real-world problems.",
-    date: "November 14, 2025",
-    time: "10:30 AM",
-    registrationFee: "₹500",
-    posterImage: "/event-posters/1.png",
-    registrationLink: "https://...",
-    knowMoreLink: "https://...",
-    brochurePage: 3
-  },
-  // 33 total events with complete details...
-]
-```
-
-### Change Colors
-Update CSS variables in `src/App.css`:
-
-```css
-:root {
-  /* Ice White/Silver Minimalist Theme */
-  --background: #0a0a0a;
-  --surface: #111111;
-  --text-primary: #FFFFFF;
-  --accent: #E8E8E8;
-  --accent-hover: #F5F5F5;
-  --border-hairline: rgba(232, 232, 232, 0.08);
-  /* Customize your theme */
-}
-```
-
-### Modify Animations
-Edit Framer Motion props in components:
-
-```javascript
-<motion.div
-  initial={{ opacity: 0, y: 50 }}
-  animate={{ opacity: 1, y: 0 }}
-  transition={{ duration: 0.8 }}
->
-```
-
 ## 🌟 Key Components
 
 ### MagneticCursor
