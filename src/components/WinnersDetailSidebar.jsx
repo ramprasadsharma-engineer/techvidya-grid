@@ -12,22 +12,13 @@ export default function WinnersDetailSidebar({ open, onClose, event, winners }) 
   return (
     <AnimatePresence>
       {open && (
-        <>
-          <motion.div
-            className="winners-backdrop"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            onClick={onClose}
-          />
-
-          <motion.div
-            className="winners-detail-sidebar"
-            initial={{ x: '100%' }}
-            animate={{ x: 0 }}
-            exit={{ x: '100%' }}
-            transition={{ type: 'spring', stiffness: 300, damping: 30 }}
-          >
+        <motion.div
+          className="winners-detail-sidebar"
+          initial={{ x: '-100%' }}
+          animate={{ x: 0 }}
+          exit={{ x: '-100%' }}
+          transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+        >
             <div className="winners-sidebar-header">
               <button className="close-btn" onClick={onClose}>
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -56,7 +47,6 @@ export default function WinnersDetailSidebar({ open, onClose, event, winners }) 
                       <div className="team-members">
                         {eventWinners.first.map((member, idx) => (
                           <div key={idx} className="member-card">
-                            <div className="member-number">Member {idx + 1}</div>
                             <h5 className="member-name">{member.name}</h5>
                             <div className="member-details">
                               {member.year && <span className="detail-badge">{member.year} Year</span>}
@@ -79,7 +69,6 @@ export default function WinnersDetailSidebar({ open, onClose, event, winners }) 
                       <div className="team-members">
                         {eventWinners.second.map((member, idx) => (
                           <div key={idx} className="member-card">
-                            <div className="member-number">Member {idx + 1}</div>
                             <h5 className="member-name">{member.name}</h5>
                             <div className="member-details">
                               {member.year && <span className="detail-badge">{member.year} Year</span>}
@@ -102,7 +91,6 @@ export default function WinnersDetailSidebar({ open, onClose, event, winners }) 
                       <div className="team-members">
                         {eventWinners.third.map((member, idx) => (
                           <div key={idx} className="member-card">
-                            <div className="member-number">Member {idx + 1}</div>
                             <h5 className="member-name">{member.name}</h5>
                             <div className="member-details">
                               {member.year && <span className="detail-badge">{member.year} Year</span>}
@@ -117,19 +105,7 @@ export default function WinnersDetailSidebar({ open, onClose, event, winners }) 
                 </>
               )}
             </div>
-
-            <div className="event-details-footer">
-              <div className="event-info-row">
-                <span className="info-label">Team Size:</span>
-                <span className="info-value">{event.teamSize}</span>
-              </div>
-              <div className="event-info-row">
-                <span className="info-label">Registration Fee:</span>
-                <span className="info-value">{event.registrationFee}</span>
-              </div>
-            </div>
-          </motion.div>
-        </>
+        </motion.div>
       )}
     </AnimatePresence>
   )
