@@ -10,6 +10,7 @@
   backface-visibility: hidden;
   perspective: 1000px;
   transition: opacity 0.3s ease;
+  display: none; /* Hide custom cursor, use default system cursor */
 }
 
 .cursor-dot {
@@ -63,19 +64,11 @@
   box-shadow: 0 0 15px rgba(0, 240, 255, 0.2);
 }
 
-/* Hide default cursor */
-* {
-  cursor: none !important;
-}
-
+/* Cursor styles disabled - using default cursor */
 /* Mobile - show default cursor */
 @media (max-width: 768px) {
   .magnetic-cursor {
     display: none;
-  }
-  
-  * {
-    cursor: auto !important;
   }
 }
 

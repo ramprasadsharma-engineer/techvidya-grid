@@ -94,7 +94,6 @@ export default function LeaderboardSidebar({ open, onClose }) {
           >
             <div className="sidebar-header">
               <h3>Leaderboard</h3>
-              <p>Live event status</p>
             </div>
 
             <div className="sidebar-events-list">

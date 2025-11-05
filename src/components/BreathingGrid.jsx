@@ -190,20 +190,6 @@ export default function BreathingGrid() {
         ctx.stroke()
       }
 
-      // Draw breathing center point
-      const centerX = canvas.width / 2
-      const centerY = canvas.height / 2
-      const breathRadius = 4 + (breathingIntensity * 6)
-      
-      ctx.strokeStyle = `rgba(180, 220, 255, ${0.4 * breathingIntensity})`
-      ctx.fillStyle = `rgba(180, 220, 255, ${0.1 * breathingIntensity})`
-      ctx.lineWidth = 1
-      
-      ctx.beginPath()
-      ctx.arc(centerX, centerY, breathRadius, 0, Math.PI * 2)
-      ctx.fill()
-      ctx.stroke()
-
       // Draw magnetic grid points
       gridPoints.forEach(point => {
         const glowIntensity = point.strength * breathingIntensity

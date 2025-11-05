@@ -4,11 +4,13 @@ import { useNavigate } from 'react-router-dom'
 import { onAuthStateChanged } from 'firebase/auth'
 import { auth } from '../lib/firebase'
 import { firebaseService } from '../services/firebaseService'
+import { useToast } from './ToastContainer'
 import './AdminPanel.css'
 import { sortedEventData } from '../data/events'
 
 export default function AdminPanel() {
   const navigate = useNavigate()
+  const { showToast, ToastContainer } = useToast()
   const [adminInfo, setAdminInfo] = useState(null)
   const [selectedEvent, setSelectedEvent] = useState(null)
   const [winners, setWinners] = useState({})
@@ -124,10 +126,10 @@ export default function AdminPanel() {
       }
       setWinners(updatedWinners)
       setEditMode(null)
-      alert('Winners saved successfully!')
+      showToast('Winners saved successfully!', 'success')
     } catch (error) {
       console.error('Error saving winners:', error)
-      alert('Error saving winners: ' + error.message)
+      showToast('Error saving winners: ' + error.message, 'error')
     }
   }
 
@@ -143,10 +145,10 @@ export default function AdminPanel() {
         delete updatedWinners[selectedEvent.id][position]
       }
       setWinners(updatedWinners)
-      alert('Winners deleted successfully!')
+      showToast('Winners deleted successfully!', 'success')
     } catch (error) {
       console.error('Error deleting winners:', error)
-      alert('Error deleting winners: ' + error.message)
+      showToast('Error deleting winners: ' + error.message, 'error')
     }
   }
 
@@ -167,10 +169,10 @@ export default function AdminPanel() {
         [eventId]: newStatus
       })
       
-      alert(`Event ${newStatus === 'closed' ? 'closed' : 'reopened'} successfully!`)
+      showToast(`Event ${newStatus === 'closed' ? 'closed' : 'reopened'} successfully!`, 'success')
     } catch (error) {
       console.error('Error updating event status:', error)
-      alert('Error updating event status: ' + error.message)
+      showToast('Error updating event status: ' + error.message, 'error')
     }
   }
 
@@ -178,10 +180,22 @@ export default function AdminPanel() {
     event.title.toLowerCase().includes(searchQuery.toLowerCase())
   )
 
+  // Calculate statistics
+  const totalEvents = sortedEventData.length
+  const eventsWithWinners = Object.keys(winners).filter(eventId => {
+    const eventWinners = winners[eventId]
+    return eventWinners.first?.length > 0 || eventWinners.second?.length > 0 || eventWinners.third?.length > 0
+  }).length
+  const closedEvents = Object.values(eventStatuses).filter(status => status === 'closed').length
+  const totalWinners = Object.values(winners).reduce((acc, eventWinners) => {
+    return acc + (eventWinners.first?.length || 0) + (eventWinners.second?.length || 0) + (eventWinners.third?.length || 0)
+  }, 0)
+
   if (!adminInfo) return null
 
   return (
     <div className="admin-panel-container">
+      <ToastContainer />
       {/* Header */}
       <div className="admin-header">
         <div className="admin-header-content">
@@ -198,6 +212,57 @@ export default function AdminPanel() {
             Logout
           </motion.button>
         </div>
+      </div>
+
+      {/* Stats Dashboard */}
+      <div className="stats-dashboard">
+        <motion.div 
+          className="stat-card"
+          style={{ '--stat-color': '#FFD700' }}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.1 }}
+        >
+          <div className="stat-icon">🎯</div>
+          <p className="stat-label">Total Events</p>
+          <h3 className="stat-value">{totalEvents}</h3>
+        </motion.div>
+
+        <motion.div 
+          className="stat-card"
+          style={{ '--stat-color': '#00ff88' }}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.2 }}
+        >
+          <div className="stat-icon">🏆</div>
+          <p className="stat-label">Events with Winners</p>
+          <h3 className="stat-value">{eventsWithWinners}</h3>
+        </motion.div>
+
+        <motion.div 
+          className="stat-card"
+          style={{ '--stat-color': '#ff6b6b' }}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.3 }}
+        >
+          <div className="stat-icon">🔒</div>
+          <p className="stat-label">Closed Events</p>
+          <h3 className="stat-value">{closedEvents}</h3>
+        </motion.div>
+
+        <motion.div 
+          className="stat-card"
+          style={{ '--stat-color': '#00d4ff' }}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.4 }}
+        >
+          <div className="stat-icon">👥</div>
+          <p className="stat-label">Total Winners</p>
+          <h3 className="stat-value">{totalWinners}</h3>
+        </motion.div>
       </div>
 
       <div className="admin-content">

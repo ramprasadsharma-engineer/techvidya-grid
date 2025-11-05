@@ -1,33 +1,55 @@
-/* Winners Detail Sidebar */
-.winners-backdrop {
-  display: none; /* Hidden as sidebar extends from leaderboard */
-}
-
-.winners-detail-sidebar {
+/* Winners Modal Dialog */
+.winners-modal-backdrop {
   position: fixed;
   top: 0;
-  left: 400px; /* Position after leaderboard sidebar */
-  width: 450px;
-  height: 100vh;
-  background: rgba(13, 13, 13, 0.98);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border-left: 1px solid rgba(232, 232, 232, 0.1);
-  border-right: 1px solid rgba(232, 232, 232, 0.1);
-  z-index: 3011;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  z-index: 4000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.winners-modal-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+  width: 90%;
+  max-width: 700px;
+  max-height: 85vh;
+  background: linear-gradient(135deg, 
+    rgba(13, 13, 13, 0.98) 0%, 
+    rgba(20, 20, 30, 0.98) 100%);
+  backdrop-filter: blur(30px);
+  -webkit-backdrop-filter: blur(30px);
+  border: 1px solid rgba(180, 220, 255, 0.2);
+  border-radius: 20px;
+  box-shadow: 
+    0 25px 80px rgba(0, 0, 0, 0.6),
+    0 0 60px rgba(180, 220, 255, 0.15),
+    inset 0 1px 1px rgba(255, 255, 255, 0.1);
+  z-index: 4001;
   display: flex;
   flex-direction: column;
   overflow: hidden;
 }
 
 /* Header */
-.winners-sidebar-header {
-  padding: 2rem 1.5rem 1.5rem;
-  border-bottom: 1px solid rgba(232, 232, 232, 0.1);
+.winners-modal-header {
+  padding: 2rem 2rem 1.5rem;
+  border-bottom: 1px solid rgba(180, 220, 255, 0.15);
   position: relative;
   background: linear-gradient(135deg, 
-    rgba(180, 220, 255, 0.05) 0%, 
+    rgba(180, 220, 255, 0.08) 0%, 
     rgba(232, 232, 232, 0.02) 100%);
+  border-radius: 20px 20px 0 0;
 }
 
 .close-btn {
@@ -52,12 +74,13 @@
   border-color: rgba(255, 0, 0, 0.3);
 }
 
-.winners-sidebar-header h3 {
+.winners-modal-header h3 {
   font-family: "Orbitron", sans-serif;
   font-size: 1.5rem;
   margin: 0 0 0.5rem 0;
   color: var(--accent);
   padding-right: 3rem;
+  text-shadow: 0 0 30px rgba(180, 220, 255, 0.5);
 }
 
 .event-meta {
@@ -75,7 +98,7 @@
 }
 
 /* Content */
-.winners-content {
+.winners-modal-content {
   flex: 1;
   overflow-y: auto;
   padding: 1.5rem;
@@ -83,11 +106,11 @@
   scrollbar-color: rgba(232, 232, 232, 0.2) transparent;
 }
 
-.winners-content::-webkit-scrollbar {
+.winners-modal-content::-webkit-scrollbar {
   width: 6px;
 }
 
-.winners-content::-webkit-scrollbar-thumb {
+.winners-modal-content::-webkit-scrollbar-thumb {
   background: rgba(232, 232, 232, 0.2);
   border-radius: 3px;
 }
@@ -102,33 +125,86 @@
   font-size: 0.9rem;
 }
 
+/* Podium Container */
+.podium-container {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-end;
+  justify-content: center;
+  padding: 1rem;
+  min-height: 300px;
+}
+
 /* Winner Position Section */
 .winner-position-section {
-  margin-bottom: 2rem;
+  flex: 1;
+  max-width: 220px;
   background: rgba(232, 232, 232, 0.03);
-  border-radius: 12px;
+  border-radius: 12px 12px 0 0;
   padding: 1rem;
   border: 1px solid rgba(232, 232, 232, 0.1);
+  border-bottom: 3px solid;
+  transition: all 0.3s ease;
+}
+
+.podium-first {
+  min-height: 320px;
+  border-bottom-color: rgba(255, 215, 0, 0.6);
+  background: linear-gradient(135deg, 
+    rgba(255, 215, 0, 0.08) 0%, 
+    rgba(232, 232, 232, 0.03) 100%);
+  box-shadow: 0 0 30px rgba(255, 215, 0, 0.2);
+}
+
+.podium-second {
+  min-height: 280px;
+  border-bottom-color: rgba(192, 192, 192, 0.6);
+  background: linear-gradient(135deg, 
+    rgba(192, 192, 192, 0.08) 0%, 
+    rgba(232, 232, 232, 0.03) 100%);
+}
+
+.podium-third {
+  min-height: 240px;
+  border-bottom-color: rgba(205, 127, 50, 0.6);
+  background: linear-gradient(135deg, 
+    rgba(205, 127, 50, 0.08) 0%, 
+    rgba(232, 232, 232, 0.03) 100%);
 }
 
 .position-header {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: 0.75rem;
+  gap: 0.5rem;
   margin-bottom: 1rem;
   padding-bottom: 0.75rem;
-  border-bottom: 1px solid rgba(232, 232, 232, 0.1);
+  border-bottom: 1px solid rgba(232, 232, 232, 0.15);
+  text-align: center;
 }
 
 .position-medal {
-  font-size: 1.5rem;
+  font-size: 2.5rem;
+  filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.3));
+}
+
+.podium-first .position-medal {
+  font-size: 3rem;
 }
 
 .position-header h4 {
   font-family: "Orbitron", sans-serif;
-  font-size: 1.1rem;
+  font-size: 0.95rem;
+  font-weight: 600;
   margin: 0;
   color: var(--text-primary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.podium-first .position-header h4 {
+  font-size: 1.1rem;
+  color: var(--accent);
 }
 
 /* Team Members */
@@ -138,83 +214,132 @@
   gap: 0.75rem;
 }
 
-.member-card {
-  background: rgba(232, 232, 232, 0.05);
-  border-radius: 8px;
-  padding: 0.75rem;
-  border: 1px solid rgba(232, 232, 232, 0.08);
-  transition: all 0.2s ease;
+.member-item {
+  padding: 0.5rem 0;
+  border-bottom: 1px solid rgba(232, 232, 232, 0.05);
 }
 
-.member-card:hover {
-  background: rgba(232, 232, 232, 0.08);
-  transform: translateX(4px);
-  border-color: rgba(180, 220, 255, 0.3);
-}
-
-.member-number {
-  font-family: "JetBrains Mono", monospace;
-  font-size: 0.7rem;
-  color: var(--accent);
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  margin-bottom: 0.3rem;
+.member-item:last-child {
+  border-bottom: none;
 }
 
 .member-name {
   font-family: "Orbitron", sans-serif;
-  font-size: 1rem;
+  font-size: 0.9rem;
   font-weight: 600;
   color: var(--text-primary);
-  margin: 0 0 0.75rem 0;
+  margin: 0 0 0.3rem 0;
 }
 
-.member-details {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.4rem;
+.podium-first .member-name {
+  font-size: 1rem;
+  color: var(--accent);
 }
 
-.detail-badge {
+.member-info {
   font-family: "JetBrains Mono", monospace;
   font-size: 0.7rem;
-  padding: 0.2rem 0.5rem;
-  background: rgba(180, 220, 255, 0.1);
-  border: 1px solid rgba(180, 220, 255, 0.2);
-  border-radius: 4px;
-  color: var(--text-primary);
+  color: var(--text-muted);
+  margin: 0 0 0.2rem 0;
 }
 
-.detail-badge.college {
-  background: rgba(232, 232, 232, 0.1);
-  border-color: rgba(232, 232, 232, 0.2);
+.member-college {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.65rem;
+  color: rgba(180, 220, 255, 0.7);
+  margin: 0;
 }
 
 /* Footer - Removed to eliminate team size and price info */
 
 /* Mobile Responsiveness */
 @media (max-width: 768px) {
-  .winners-detail-sidebar {
-    left: 0;
-    width: 100%;
+  .winners-modal-container {
+    width: 95%;
+    max-width: 95%;
+    max-height: 90vh;
+    border-radius: 16px;
+  }
+
+  .winners-modal-header {
+    padding: 1.5rem 1.5rem 1rem;
+    border-radius: 16px 16px 0 0;
+  }
+
+  .winners-modal-header h3 {
+    font-size: 1.3rem;
+  }
+
+  .winners-modal-content {
+    padding: 1rem;
+  }
+
+  .podium-container {
+    flex-direction: column;
+    align-items: stretch;
+    min-height: auto;
+    gap: 1.5rem;
+  }
+
+  .winner-position-section {
     max-width: 100%;
+    min-height: auto !important;
+    border-radius: 12px;
+    border-bottom: 2px solid;
+  }
+
+  .position-medal {
+    font-size: 2rem !important;
   }
 }
 
 @media (max-width: 480px) {
-  .winners-sidebar-header {
-    padding: 1.5rem 1rem 1rem;
+  .winners-modal-container {
+    width: 98%;
+    max-height: 92vh;
+    border-radius: 12px;
   }
 
-  .winners-sidebar-header h3 {
+  .winners-modal-header {
+    padding: 1.25rem 1rem 1rem;
+    border-radius: 12px 12px 0 0;
+  }
+
+  .winners-modal-header h3 {
     font-size: 1.2rem;
   }
 
-  .winners-content {
-    padding: 1rem;
+  .event-meta {
+    font-size: 0.75rem;
   }
 
-  .member-card {
-    padding: 0.6rem;
+  .winners-modal-content {
+    padding: 0.75rem;
+  }
+
+  .podium-container {
+    padding: 0.5rem;
+    gap: 1rem;
+  }
+
+  .winner-position-section {
+    padding: 0.75rem;
+    border-radius: 10px;
+  }
+
+  .position-header h4 {
+    font-size: 0.85rem;
+  }
+
+  .member-name {
+    font-size: 0.85rem;
+  }
+
+  .member-info {
+    font-size: 0.65rem;
+  }
+
+  .member-college {
+    font-size: 0.6rem;
   }
 }

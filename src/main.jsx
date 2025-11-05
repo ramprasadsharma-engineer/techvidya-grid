@@ -6,20 +6,6 @@ import AuthLogin from './components/AuthLogin.jsx'
 import AdminPanel from './components/AdminPanel.jsx'
 import './index.css'
 
-// Register PWA Service Worker
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register('/sw.js', { scope: '/' }).then(
-      (registration) => {
-        console.log('ServiceWorker registration successful:', registration.scope)
-      },
-      (err) => {
-        console.log('ServiceWorker registration failed:', err)
-      }
-    )
-  })
-}
-
 // Remove loading screen after app loads
 window.addEventListener('load', () => {
   setTimeout(() => {
