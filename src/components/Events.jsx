@@ -84,6 +84,17 @@ export default function Events() {
                 </div>
               </div>
               
+              <div className="event-meta-info">
+                <div className="meta-item">
+                  <span className="meta-icon">💰</span>
+                  <span className="meta-text">{event.registrationFee}</span>
+                </div>
+                <div className="meta-item">
+                  <span className="meta-icon">👥</span>
+                  <span className="meta-text">Team: {event.teamSize}</span>
+                </div>
+              </div>
+              
               <div className="event-buttons">
                 {event.embedWebsite ? (
                   <motion.a
