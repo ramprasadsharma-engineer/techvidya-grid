@@ -86,12 +86,14 @@ export default function Events() {
               
               <div className="event-meta-info">
                 <div className="meta-item">
-                  <span className="meta-icon">💰</span>
                   <span className="meta-text">{event.registrationFee}</span>
                 </div>
                 <div className="meta-item">
-                  <span className="meta-icon">👥</span>
-                  <span className="meta-text">Team: {event.teamSize}</span>
+                  <span className="meta-text">
+                    {event.teamSize === "1" || event.teamSize === 1 
+                      ? "Individual" 
+                      : `Team: ${event.teamSize} members`}
+                  </span>
                 </div>
               </div>
               
