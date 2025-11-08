@@ -1,7 +1,7 @@
 export const BROCHURE_URL = "https://techvidya-2025-brochure.pages.dev/";
 
 export const REGISTRATION_LINKS = {
-  "HackBlaze": "https://forms.gle/hackblaze2025",
+  "HackBlaze": "https://forms.gle/tuXBenWTksP8fDf69",
   "Paper Presentation": "https://forms.gle/wLUQQTFGkjBeDLX36",
   "Platronics": "https://forms.gle/bqr8G9b6yJKJstqu7",
   "Technical Quiz": "https://forms.gle/2vVpev6CiLh6PYKFA",
@@ -48,7 +48,7 @@ export const eventData = [
     registrationFee: "₹500",
     teamSize: "2 to 4",
     posterImage: "/event-posters/1.png",
-    registrationLink: null,
+  registrationLink: REGISTRATION_LINKS["HackBlaze"],
     embedWebsite: "https://hackblaze.vercel.app/",
     knowMoreLink: `${BROCHURE_URL}?page=3`,
     brochurePage: 3
