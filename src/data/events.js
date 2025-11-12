@@ -42,7 +42,7 @@ export const eventData = [
     id: 1,
     title: "HackBlaze",
     description: "A hackathon to build innovative solutions for real-world problems.",
-    date: "November 14, 2025",
+  date: "November 15, 2025",
     time: "9:00 AM",
     venue: "LH 021",
     registrationFee: "₹500",
