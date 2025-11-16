@@ -9,6 +9,11 @@ export default defineConfig({
     // VitePWA plugin disabled in development to avoid manifest errors
     // Enable it only for production builds
   ],
+  server: {
+    headers: {
+      'Cache-Control': 'no-store',
+    },
+  },
   build: {
     rollupOptions: {
       output: {
@@ -16,7 +21,11 @@ export default defineConfig({
           vendor: ['react', 'react-dom'],
           motion: ['framer-motion'],
           three: ['three', '@react-three/fiber', '@react-three/drei']
-        }
+        },
+        // Add hash to filenames for cache busting
+        entryFileNames: 'assets/[name].[hash].js',
+        chunkFileNames: 'assets/[name].[hash].js',
+        assetFileNames: 'assets/[name].[hash].[ext]'
       }
     }
   }
