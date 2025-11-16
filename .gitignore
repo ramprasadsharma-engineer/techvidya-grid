@@ -39,3 +39,10 @@ index-old.html
 script-old.js
 styles-old.css
 
+# Others
+.rules
+firebase.json
+.firebaserc
+SECURITY-FIX.md 
+UPDATE_SUMMARY.md
+FIREBASE-SETUP-COMPLETE.md 

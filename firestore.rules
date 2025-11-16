@@ -19,8 +19,7 @@ service cloud.firestore {
       // Only authenticated users can create/update
       allow create, update: if isAuthenticated() 
         && request.resource.data.keys().hasAll(['eventId', 'status', 'updatedAt'])
-        && request.resource.data.eventId is string
-        && request.resource.data.eventId == eventId
+        && request.resource.data.eventId is number
         && request.resource.data.status in ['upcoming', 'active', 'closed']
         && request.resource.data.updatedAt is timestamp;
       
@@ -29,15 +28,16 @@ service cloud.firestore {
     }
     
     // Winners Collection
-    match /winners/{eventId} {
+    match /winners/{winnerId} {
       // Public read access
       allow read: if true;
       
       // Only authenticated users can write
       allow create, update: if isAuthenticated()
-        && request.resource.data.keys().hasAll(['eventId', 'updatedAt'])
-        && request.resource.data.eventId is string
-        && request.resource.data.eventId == eventId
+        && request.resource.data.keys().hasAll(['eventId', 'position', 'members', 'updatedAt'])
+        && request.resource.data.eventId is number
+        && request.resource.data.position in ['first', 'second', 'third']
+        && request.resource.data.members is list
         && request.resource.data.updatedAt is timestamp;
       
       allow delete: if isAuthenticated();
